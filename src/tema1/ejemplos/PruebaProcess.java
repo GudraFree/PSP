@@ -1,4 +1,4 @@
-package ejemplo;
+package tema1.ejemplos;
 
 import java.io.IOException;
 import java.lang.NullPointerException;

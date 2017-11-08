@@ -1,4 +1,4 @@
-package ejemploRunTimeExec;
+package tema1.ejemplos;
 
 import java.io.*;
 

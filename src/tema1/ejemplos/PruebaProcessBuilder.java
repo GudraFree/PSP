@@ -1,4 +1,4 @@
-package ejemplo;
+package tema1.ejemplos;
 
 import java.io.File;
 import java.io.IOException;
