@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tema1.ejercicio2;
+package tema1.ejercicio02;
 
 import java.util.ArrayList;
 import java.util.List;

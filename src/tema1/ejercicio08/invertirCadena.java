@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tema1.ejercicio8;
+package tema1.ejercicio08;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
