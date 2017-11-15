@@ -10,5 +10,16 @@ package tema1.ejercicio09;
  * @author Perig
  */
 public class MaxMinMed {
+    public static void main(String[] args) {
+        String entrada = argsToString(args);
+        
+    }
     
+    static String argsToString(String[] args) {
+        String cad="";
+        for (String c : args) {
+            cad+=":"+c;
+        }
+        return cad.substring(1);
+    }
 }

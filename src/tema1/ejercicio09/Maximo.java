@@ -3,27 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tema1.ejercicio08;
+package tema1.ejercicio09;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 
 /**
  *
  * @author Perig
  */
-public class invertirCadena {
+public class Maximo {
     public static void main(String[] args) {
         byte[] entrada = new byte[100];
-        String cadena;
-        try {
+        int maximo = 0;
+        try{
             System.in.read(entrada);
-            cadena = (new StringBuilder(new String(entrada)).reverse().toString()).trim();
-            System.out.write(cadena.getBytes());
-            
+            String[] numeros = (new String(entrada).trim()).split(":");
+            for (String nC : numeros) {
+                int n = Integer.parseInt(nC);
+                if (n > maximo) maximo = n;
+            }
+            System.out.write((maximo+"").getBytes());
         } catch (IOException e) {}
     }
 }

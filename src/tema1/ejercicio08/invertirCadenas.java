@@ -5,12 +5,11 @@
  */
 package tema1.ejercicio08;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -31,30 +30,28 @@ public class invertirCadenas {
                 System.out.println("Escriba una cadena a invertir (Escriba 'FIN' para dejar de introducir cadenas)");
                 cadena=sc.nextLine();
                 if(cadena.equals("FIN")) break;
-                Process p = Runtime.getRuntime().exec("java tema1.ejercicio8.invertirCadena");
+                Process p = Runtime.getRuntime().exec("java tema1.ejercicio08.invertirCadena");
                 procesos.add(p);
-                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
-                outputs.add(bw);
-                bw.write(cadena);
-                bw.flush();
-                bw.close();
+                OutputStream os = p.getOutputStream();
+                os.write(cadena.getBytes());
+                os.flush();
+                os.close();
             } catch (IOException e) {}
         } while(!cadena.equals("FIN"));
         
+        byte[] salida = new byte[100];
+        
         for (Process p : procesos) {
-            System.out.println("Holi proceso");
-            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            inputs.add(br);
+            InputStream is = p.getInputStream();
             try {
-                cadena = br.readLine();
-                br.close();
+                is.read(salida);
             } catch (IOException e) {
                 System.out.println("Error de lectura");
             }
-            cadenas.add(cadena);
+            cadenas.add(new String(salida));
         }
         
         System.out.println("Cadenas revertidas:");
-        for (String c : cadenas) System.out.println("\t"+c);
+        for (String c : cadenas) System.out.println(c);
     }
 }
