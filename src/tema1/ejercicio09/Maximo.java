@@ -5,6 +5,8 @@
  */
 package tema1.ejercicio09;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -17,12 +19,22 @@ public class Maximo {
         int maximo = 0;
         try{
             System.in.read(entrada);
-            String[] numeros = (new String(entrada).trim()).split(":");
-            for (String nC : numeros) {
-                int n = Integer.parseInt(nC);
-                if (n > maximo) maximo = n;
+            String numeros = (new String(entrada).trim());
+            String n = "";
+            for (int i=0; i<numeros.length(); i++) {
+                String c = ""+numeros.charAt(i);
+                if (c.equals(":")) {
+                    if (Integer.parseInt(n) > maximo) maximo = Integer.parseInt(n);
+                    n="";
+                }
+                else n += numeros.charAt(i);
+                
             }
+            // salida estándar
             System.out.write((maximo+"").getBytes());
+            
+            // escribir en fichero
+//            new FileWriter(new File("Maximo.txt"), false).write(maximo+"");
         } catch (IOException e) {}
     }
 }

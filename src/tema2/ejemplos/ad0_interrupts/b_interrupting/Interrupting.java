@@ -1,4 +1,4 @@
-package ad0_interrupts.b_interrupting;
+package tema2.ejemplos.ad0_interrupts.b_interrupting;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
@@ -35,7 +35,7 @@ public class Interrupting {
 	 
 	 //secondExample();
                              
-     //thridExample();  No hace lo que esperaba: que join lanzara la excepción InterruptedException
+     //thridExample();  No hace lo que esperaba: que join lanzara la excepciï¿½n InterruptedException
      
      //extraExample();
 	 	
@@ -87,7 +87,7 @@ public class Interrupting {
 	 * <p>The interruption is probably received by task's thread when has yet execute 'sleep()', 
 	 * so sleep() throws InterruptedException, that is couch in 'run()' method that simply 
 	 * -show a message and- returns.
-	 * <p>note: <code>run()</code> CAN'T throws <code>InterruptedException</code>, ¿so <code>join()</code> 
+	 * <p>note: <code>run()</code> CAN'T throws <code>InterruptedException</code>, ï¿½so <code>join()</code> 
 	 * can't throw this exception?
 	 */
 	public static void secondExample()
@@ -190,7 +190,7 @@ public class Interrupting {
 	   
 	   es.shutdownNow();
 	   
-	   f.cancel(true); // System.out.printf("¿Tarea cancelada?: %b\n",es.submit(task).cancel(true));
+	   f.cancel(true); // System.out.printf("ï¿½Tarea cancelada?: %b\n",es.submit(task).cancel(true));
 	   
 	   //es.shutdown();
 	  

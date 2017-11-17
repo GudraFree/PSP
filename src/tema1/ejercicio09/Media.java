@@ -5,6 +5,8 @@
  */
 package tema1.ejercicio09;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -24,7 +26,11 @@ public class Media {
                 suma+=n;
             }
             float media = suma / (float)(numeros.length);
-            System.out.write((suma+"").getBytes());
+            // salida estándar
+            System.out.write((media+"").getBytes());
+            
+            // escribir en fichero
+//            new FileWriter(new File("Maximo.txt"), false).write(media+"");
         } catch (IOException e) {}
     }
 }

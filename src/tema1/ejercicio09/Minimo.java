@@ -5,6 +5,8 @@
  */
 package tema1.ejercicio09;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -22,7 +24,11 @@ public class Minimo {
                 int n = Integer.parseInt(nC);
                 if (n < minimo) minimo = n;
             }
+            // salida estándar
             System.out.write((minimo+"").getBytes());
+            
+            // escribir en fichero
+//            new FileWriter(new File("Maximo.txt"), false).write(minimo+"");
         } catch (IOException e) {}
     }
 }

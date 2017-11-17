@@ -1,4 +1,4 @@
-package ad0_interrupts;
+package tema2.ejemplos.ad0_interrupts;
 
 /**
  * <p>An interrupt is an indication to a thread that it should stop what it is doing and
