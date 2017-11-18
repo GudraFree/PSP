@@ -5,7 +5,11 @@
  */
 package tema1.ejercicio09;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,31 +20,50 @@ public class MaxMinMed {
         String entrada = argsToString(args);
         Runtime rt = Runtime.getRuntime();
         byte[] salida = new byte[100];
-        String max, min, med;
+        String max, min, med, cadena="";
+        ArrayList<Process> procesos = new ArrayList();
         try {
             Process pMax = rt.exec("java tema1.ejercicio09.Maximo");
             System.out.println("Creado proceso max");
-            pMax.getOutputStream().write(entrada.getBytes());
+            OutputStream osMax = pMax.getOutputStream();
+            osMax.write(entrada.getBytes());
+            osMax.flush();
+            osMax.close();
             System.out.println("Enviados bytes a max");
-            pMax.getInputStream().read(salida);
-            System.out.println("Leídos bytes de max");
-            max = (new String(salida).trim());
+            procesos.add(pMax);
+            
             Process pMin = rt.exec("java tema1.ejercicio09.Minimo");
             System.out.println("Creado proceso min");
-            pMin.getOutputStream().write(entrada.getBytes());
+            OutputStream osMin = pMin.getOutputStream();
+            osMin.write(entrada.getBytes());
+            osMin.flush();
+            osMin.close();
             System.out.println("Enviados bytes a min");
-            pMin.getInputStream().read(salida);
-            System.out.println("Leidos bytes de min");
-            min = (new String(salida).trim());
+            procesos.add(pMin);
+            
             Process pMed = rt.exec("java tema1.ejercicio09.Media");
-            pMed.getOutputStream().write(entrada.getBytes());
-            pMed.getInputStream().read(salida);
-            med = (new String(salida).trim());
+            OutputStream osMed = pMed.getOutputStream();
+            osMed.write(entrada.getBytes());
+            osMed.flush();
+            osMed.close();
+            procesos.add(pMed);
+            String resu;
+            for(Process p : procesos) {
+                System.out.println("Leyendo bytes de proceso");
+                BufferedReader brCleanUp = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+                while ((resu = brCleanUp.readLine()) != null) {
+
+                    System.out.println(resu);
+                    cadena += resu+":";
+
+                }
+            }
             
             
         // salida estandar
             
-            System.out.println("Máximo: "+max+"\nMínimo: "+min+"\nMedia: "+med);
+            System.out.println(cadena);
         } catch (IOException e) {
             System.out.println("Error de E/S");
         }
@@ -50,11 +73,8 @@ public class MaxMinMed {
     static String argsToString(String[] args) {
         String cad="";
         for (String c : args) {
-            System.out.println(c);
             cad+=":"+c;
         }
-        cad =cad.substring(1);
-        System.out.println(cad);
         return cad;
     }
 }

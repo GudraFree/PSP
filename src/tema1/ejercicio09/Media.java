@@ -17,15 +17,23 @@ public class Media {
     public static void main(String[] args) {
         byte[] entrada = new byte[100];
         int suma = 0;
-        String[] numeros;
+        String numeros;
+        int contador=0;
+        float media;
         try{
             System.in.read(entrada);
-            numeros = (new String(entrada).trim()).split(":");
-            for (String nC : numeros) {
-                int n = Integer.parseInt(nC);
-                suma+=n;
+            numeros = (new String(entrada).trim());
+            String n = "";
+            for (int i=0; i<numeros.length(); i++) {
+                String c = ""+numeros.charAt(i);
+                if (c.equals(":")) {
+                    int nInt = Integer.parseInt(n);
+                    suma+=nInt;
+                    ++contador;
+                }
+                else n += numeros.charAt(i);
             }
-            float media = suma / (float)(numeros.length);
+            media = suma / (float)(contador);
             // salida estándar
             System.out.write((media+"").getBytes());
             

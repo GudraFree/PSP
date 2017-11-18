@@ -16,13 +16,19 @@ import java.io.IOException;
 public class Minimo {
     public static void main(String[] args) {
         byte[] entrada = new byte[100];
-        int minimo = 0;
+        int minimo = Integer.MAX_VALUE;
         try{
             System.in.read(entrada);
-            String[] numeros = (new String(entrada).trim()).split(":");
-            for (String nC : numeros) {
-                int n = Integer.parseInt(nC);
-                if (n < minimo) minimo = n;
+            String numeros = (new String(entrada).trim());
+            String n = "";
+            for (int i=0; i<numeros.length(); i++) {
+                String c = ""+numeros.charAt(i);
+                if (c.equals(":")) {
+                    if (Integer.parseInt(n) < minimo) minimo = Integer.parseInt(n);
+                    n="";
+                }
+                else n += numeros.charAt(i);
+                
             }
             // salida estándar
             System.out.write((minimo+"").getBytes());
