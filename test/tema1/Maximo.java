@@ -6,6 +6,7 @@
 package tema1;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  *
@@ -13,8 +14,10 @@ import java.io.IOException;
  */
 public class Maximo {
     public static void main(String[] args) throws IOException {
+        System.out.println("Mi método");
         metodoPerig();
-//        metodoRuben();
+        System.out.println("\n\nEl de Rubén");
+        metodoRuben();
     }
     
     static void metodoPerig() throws IOException {
@@ -30,7 +33,7 @@ public class Maximo {
             for (int i=0; i<length; i++) {
                 char c = numeros.charAt(i);
                 System.out.println("Carácter "+c);
-                if (c==':') {
+                if (c=='-') {
                     System.out.println("Encontré :");
                     int nInt = Integer.parseInt(n);
                     System.out.println("El número es "+nInt);
@@ -56,5 +59,37 @@ public class Maximo {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    static void metodoRuben() {
+        byte[] entrada = new byte[100];
+        try {
+            //entrada es lo que recibe
+            System.in.read(entrada);
+            String entradaS = new String(entrada);
+            System.out.println(entradaS);
+            int numeros[] = new int[entradaS.length() - 1];
+            pasoArray(entradaS, numeros);
+            int maximo = sacaMaximo(numeros);
+            String maximoS = "El maximo es: " + maximo;
+            //se manda de vuelta
+            System.out.write(maximoS.getBytes());
+
+        } catch (IOException ioe) {
+            ioe.getMessage();
+        }
+    }
+
+    public static void pasoArray(String numero, int numeros[]) {
+
+        for (int i = 0; i < numeros.length; i++) {
+            numeros[i] = Character.getNumericValue(numero.charAt(i));
+        }
+    }
+
+    public static int sacaMaximo(int numeros[]) {
+        Arrays.sort(numeros);
+
+        return numeros[numeros.length - 1];
     }
 }

@@ -20,25 +20,26 @@ public class MaxMinMed {
         String entrada = argsToString(args);
         Runtime rt = Runtime.getRuntime();
         byte[] salida = new byte[100];
-        String max, min, med, cadena="";
+        String cadena="";
+        String[] mensajes = {"Máximo: ", "Mínimo: ","Media: "};
         ArrayList<Process> procesos = new ArrayList();
         try {
             Process pMax = rt.exec("java tema1.ejercicio09.Maximo");
-            System.out.println("Creado proceso max");
+//            System.out.println("Creado proceso max");
             OutputStream osMax = pMax.getOutputStream();
             osMax.write(entrada.getBytes());
             osMax.flush();
             osMax.close();
-            System.out.println("Enviados bytes a max");
+//            System.out.println("Enviados bytes a max");
             procesos.add(pMax);
             
             Process pMin = rt.exec("java tema1.ejercicio09.Minimo");
-            System.out.println("Creado proceso min");
+//            System.out.println("Creado proceso min");
             OutputStream osMin = pMin.getOutputStream();
             osMin.write(entrada.getBytes());
             osMin.flush();
             osMin.close();
-            System.out.println("Enviados bytes a min");
+//            System.out.println("Enviados bytes a min");
             procesos.add(pMin);
             
             Process pMed = rt.exec("java tema1.ejercicio09.Media");
@@ -48,22 +49,16 @@ public class MaxMinMed {
             osMed.close();
             procesos.add(pMed);
             String resu;
-            for(Process p : procesos) {
-                System.out.println("Leyendo bytes de proceso");
-                BufferedReader brCleanUp = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            for(int i=0; i<procesos.size(); i++) {
+//                System.out.println("Leyendo bytes de proceso");
+                BufferedReader brCleanUp = new BufferedReader(new InputStreamReader(procesos.get(i).getInputStream()));
 
                 while ((resu = brCleanUp.readLine()) != null) {
 
-                    System.out.println(resu);
-                    cadena += resu+":";
+                    System.out.println(mensajes[i]+resu);
 
                 }
             }
-            
-            
-        // salida estandar
-            
-            System.out.println(cadena);
         } catch (IOException e) {
             System.out.println("Error de E/S");
         }
@@ -73,7 +68,7 @@ public class MaxMinMed {
     static String argsToString(String[] args) {
         String cad="";
         for (String c : args) {
-            cad+=":"+c;
+            cad+=c+":";
         }
         return cad;
     }

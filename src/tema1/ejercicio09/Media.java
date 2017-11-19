@@ -30,6 +30,7 @@ public class Media {
                     int nInt = Integer.parseInt(n);
                     suma+=nInt;
                     ++contador;
+                    n="";
                 }
                 else n += numeros.charAt(i);
             }

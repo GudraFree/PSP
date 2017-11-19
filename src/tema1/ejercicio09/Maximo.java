@@ -25,22 +25,34 @@ public class Maximo {
         int maximo = 0;
         try{
             System.in.read(entrada);
-            String numeros = (new String(entrada));
+            String numeros = (new String(entrada).trim());
+//            System.out.println("Cadena "+numeros);
             String n = "";
-            for (int i=0; i<numeros.length(); i++) {
+            int length = numeros.length();
+//            System.out.println("Longitud "+length);
+            for (int i=0; i<length; i++) {
                 char c = numeros.charAt(i);
+//                System.out.println("Carácter "+c);
                 if (c==':') {
+//                    System.out.println("Encontré :");
                     int nInt = Integer.parseInt(n);
-                    if (nInt > maximo) maximo = nInt;
+//                    System.out.println("El número es "+nInt);
+                    if (nInt > maximo) {
+                        maximo = nInt;
+//                        System.out.println("Y ahora es el máximo");
+                    }
                     n="";
                 }
-                else n += c;
+                else {
+                    n += c;
+//                    System.out.println("Ahora n es "+n);
+                }
                 
             }
             String maxCadena = maximo+"";
             // salida estándar
+//            System.out.println(new String(maxCadena.getBytes()));
             System.out.write(maxCadena.getBytes());
-            
             // escribir en fichero
 //            new FileWriter(new File("Maximo.txt"), false).write(maximo+"");
         } catch (Exception e) {
