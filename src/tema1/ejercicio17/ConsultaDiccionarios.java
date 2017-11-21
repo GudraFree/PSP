@@ -11,6 +11,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -22,6 +25,7 @@ import java.util.TreeMap;
  */
 public class ConsultaDiccionarios {
     TreeMap<String,ArrayList<File>> palabraYDiccios;
+    File rutaSalida;
     
     public static void main(String[] args) {
         ConsultaDiccionarios cd = new ConsultaDiccionarios(args);
@@ -45,7 +49,6 @@ public class ConsultaDiccionarios {
         
         // recorremos el map para enviar un proceso por cada palabra
         Iterator it = palabraYDiccios.entrySet().iterator();
-//        System.out.println("Vamos a lanzar los procesos");
         while(it.hasNext()) {
             Map.Entry<String,ArrayList<File>> entry = (Map.Entry) it.next();
             String palabra = entry.getKey();
@@ -53,12 +56,10 @@ public class ConsultaDiccionarios {
             try {
                 for (File diccio : diccios) {
                     Process p = pb.start();
-//                    System.out.println("proceso lanzado");
                     OutputStream os = p.getOutputStream();
                     os.write((palabra+"\n").getBytes());
                     os.write((diccio.getAbsolutePath()+"\n").getBytes());
                     os.flush();
-//                    System.out.println("Información enviada");
                     os.close();
                     procesos.add(p);
                 }
@@ -69,19 +70,15 @@ public class ConsultaDiccionarios {
         
         
         // leemos la salida del proceso
-//        System.out.println("Leemos la salida de los procesos");
         ArrayList<String[]> lecturas = new ArrayList();
         for (Process p : procesos) {
             BufferedReader brs = new BufferedReader(new InputStreamReader(p.getInputStream()));
             BufferedReader bre = new BufferedReader(new InputStreamReader(p.getErrorStream()));
             String line;
-//            System.out.println("Intentamos leer este proceso");
             try {
                 int i = 0;
                 while ((line = brs.readLine()) != null) {
-                    // debo guardar todo en un arraylist de [nombre,n1,n2] desde una línea 'nombre n1 n2'
-                    // luego lo trataré en un treemap de <nombre,[n1,n2]>
-                    System.out.println(line);
+//                    System.out.println(line);
                     lecturas.add(line.split(":"));
                 }
                 while ((line = bre.readLine()) != null) {
@@ -94,38 +91,35 @@ public class ConsultaDiccionarios {
         
         //tratamiento de palabras
         TreeMap<String,int[]> resultados = new TreeMap();
-        for(String[] tupla : lecturas) {
-            for (String str : tupla) System.out.println(str);
-            int[] numeros = resultados.get(tupla[0]);
+        for(String[] lectura : lecturas) {
+//            for (String str : lectura) System.out.println(str);
+            int[] numeros = resultados.get(lectura[0]);
             if(numeros==null) {
-//                System.out.println("Introduciendo nuevo numero");
                 int[] numerosNuevos = new int[2];
-                numerosNuevos[0] = Integer.parseInt(tupla[1]);
-                numerosNuevos[1] = Integer.parseInt(tupla[2]);
-                resultados.put(tupla[0], numerosNuevos);
+                numerosNuevos[0] = Integer.parseInt(lectura[1]);
+                numerosNuevos[1] = Integer.parseInt(lectura[2]);
+                resultados.put(lectura[0], numerosNuevos);
             } else {
-//                System.out.println("Sumando a numero existente");
-                numeros[0] = numeros[0]+Integer.parseInt(tupla[1]);
-                numeros[1] = numeros[1]+Integer.parseInt(tupla[2]);
+                numeros[0] = numeros[0]+Integer.parseInt(lectura[1]);
+                numeros[1] = numeros[1]+Integer.parseInt(lectura[2]);
             }
         }
         
-        int[] prueba = {1,2};
-        resultados.put("prueba",prueba);
-        System.out.println(resultados.size());
-        Iterator it2 = resultados.entrySet().iterator();
-        while(it2.hasNext()) {
-//            System.out.println("Antes de obtener entry");
-            Map.Entry entry = (Map.Entry) it2.next();
-//            System.out.println("Después de obtener entry");
+        // escritura en fichero
+        StandardOpenOption append = StandardOpenOption.TRUNCATE_EXISTING;
+        for (Map.Entry entry : resultados.entrySet()) {
             String palabra = (String) entry.getKey();
-//            System.out.println("Después de obtener palabra");
             int[] numeros = (int[]) entry.getValue();
-//            System.out.println("Después de obtener numeros");
-            System.out.println(palabra+": "+numeros[0]+", "+numeros[1]);
+            String cadena = palabra+": "+numeros[0]+", "+numeros[1]+" \n";
+            try {
+                Files.write(Paths.get(rutaSalida.getAbsolutePath()), cadena.getBytes(), append);
+                append = StandardOpenOption.APPEND;
+            } catch (IOException e) {
+                System.out.println("Error de E/S: escritura en fichero de salida");
+            }
+//            System.out.println(cadena);
         }
         
-//        System.out.println("programa terminado");
     }
     
     private void compruebaArgumentos(String[] args) throws SintaxisException, FileNotFoundException {
@@ -167,8 +161,8 @@ public class ConsultaDiccionarios {
             } // fin bucle parejas -p -d
             // al terminar el bucle, es que ha encontrado -r
             i++; // siguiente argumento
-            File ruta = new File(args[i]); //el argumento tras -r indica la ruta del archivo que contendrá la salida
-            if(!ruta.exists()) throw new FileNotFoundException(ruta.getName()+" (archivo de salida)"); //si no existe, su correspondiente excepción
+            rutaSalida = new File(args[i]); //el argumento tras -r indica la ruta del archivo que contendrá la salida
+            if(!rutaSalida.exists()) throw new FileNotFoundException(rutaSalida.getName()+" (archivo de salida)"); //si no existe, su correspondiente excepción
         } catch (IndexOutOfBoundsException e) { // si hay algún tipo de fallo en el conteo de argumentos, saltará esta excepción
             throw new SintaxisException(); // lo cual indica que había un fallo de sintaxis
         }

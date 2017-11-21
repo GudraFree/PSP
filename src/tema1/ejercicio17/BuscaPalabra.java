@@ -7,9 +7,10 @@ package tema1.ejercicio17;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 /**
  *
@@ -54,8 +55,25 @@ public class BuscaPalabra {
     
     int[] busqueda(String palabra, File diccio) {
         int[] res = new int[2];
-        res[0] = 3;
-        res[1] = 12;
+        int definiciones=0, apariciones=0;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(diccio));
+            String line;
+            while ((line=br.readLine()) != null) {
+                if(line.equals(palabra+":")) ++definiciones;
+                int i;
+                while ((i=line.indexOf(palabra)) > -1) {
+                    ++apariciones;
+                    line = line.substring(i+1); //sumamos 1 para que corte la palabra: acronimo > cronimo (indexOf(acronimo)=-1)
+                }
+            }
+            res[0] = definiciones;
+            res[1] = apariciones;
+        } catch (FileNotFoundException e) {
+            System.err.println("Error, archivo no encontrado");
+        } catch (IOException e) {
+            System.err.println("Error de E/S en proceso: búsqueda palabra");
+        }
         
         return res;
     }
