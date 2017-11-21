@@ -37,10 +37,12 @@ public class ConsultaDiccionarios {
             compruebaArgumentos(args);
         } catch (SintaxisException e) {
             System.out.println("Error de sintaxis del comando. Ejemplo correcto:\n  -p palabra -d diccio1 diccio2 ... [-p palabra -d diccio1 diccio2 ... ]* -r archivoSalida");
-            System.exit(0);
+//            System.exit(0);
+            return;
         } catch (FileNotFoundException e) {
             System.out.println("Error, archivo "+e.getMessage()+" no encontrado");
-            System.exit(0);
+//            System.exit(0);
+            return;
         } 
         
         String[] comando = {"java","tema1.ejercicio17.BuscaPalabra"};

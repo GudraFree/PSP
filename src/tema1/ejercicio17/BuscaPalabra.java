@@ -46,11 +46,12 @@ public class BuscaPalabra {
         int[] resultados = busqueda(palabra, diccio);
         String resultado = palabra+":"+resultados[0]+":"+resultados[1];
         
-        try {
-            System.out.write((resultado+"\n").getBytes());
-        } catch (IOException e) {
-            System.err.println("Error de E/S en proceso: escritura");
-        }
+//        try {
+//            System.out.write((resultado+"\n").getBytes());
+//        } catch (IOException e) {
+//            System.err.println("Error de E/S en proceso: escritura");
+//        }
+        System.out.println(resultado);
     }
     
     int[] busqueda(String palabra, File diccio) {
