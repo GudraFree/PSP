@@ -18,13 +18,25 @@ public class Interrupting {
             public void run() {
                 System.out.println("task's thread: beginning task");
                 try {
-                    Thread.sleep((int) (Math.random() * 5000));
+                    int i = (int) (Math.random() * 5000);
+                    System.out.println(i);
+                    Thread.sleep(i);
+//                    Thread.sleep(5000);
                 } catch (InterruptedException ee) {
                     System.out.println("task's thread: sleep() has thrown an InterruptedException");
                     return;
                 }
                 System.out.println("task's thread: finishing task, so I'm about to die");
             }
+//            @Override
+//            public void run() {
+//                    try {
+//                        Thread.sleep(5000);
+//                    } catch (InterruptedException e) {
+//                        System.out.println("INTERRUPTED EXCEPTION CUENTA 100");
+//                        return;
+//                }
+//            }
         };
 
 //        firstExample();

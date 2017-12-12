@@ -15,19 +15,16 @@ public class HiloPadre {
     }
 
     public HiloPadre() {
-        Thread cuenta100 = new Cuenta100Thread();
-        Thread factoresPrimos = new FactoresPrimosThread(3452, 5);
+        Thread cuenta100 = new Cuenta100Task();
+//        Thread factoresPrimos = new FactoresPrimosThread(3452, 5);
         cuenta100.start();
 //        factoresPrimos.start();
         try {
-//            Thread.sleep((int)(Math.random()*3000));
-            Thread.sleep((int)(1500));
-            cuenta100.interrupt();
-//            Thread.sleep(100);
+            Thread.sleep((int)1500);
             isAliveOrInterrupted(cuenta100);
-//            Thread.sleep((int)(Math.random()*1000));
-//            factoresPrimos.interrupt();
-//            isAliveOrInterrupted(factoresPrimos);
+            cuenta100.interrupt();
+            isAliveOrInterrupted(cuenta100);
+
         } catch (InterruptedException e) {
             System.out.println("Error de interrupción");
         }
