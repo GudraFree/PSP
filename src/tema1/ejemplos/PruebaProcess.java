@@ -199,7 +199,7 @@ public class PruebaProcess {
                     System.out.println("We get an errorStream conected to the standard subprocess's error console");
                     break;
 
-                case escribirEnOutputStream:/*{ XXX EscribirEnOutputStream
+                case escribirEnOutputStream:/*{ 
                                                 
                                                   OutputStreamWriter outputStreamWriterToSubprocessInput= new OutputStreamWriter(outputStreamToSubprocessInput);	
                                                  
