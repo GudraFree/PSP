@@ -28,16 +28,8 @@ public class FuerzaBruta {
         // lanzamos los hilos que buscan la contraseña
         fb.cp = new ConjuntoHilos(nHilos, password);
         fb.cp.lanzaHilos();
+        fb.cp.lanzaHiloPregunta();
         
-        //Creamos y lanzamos el hilo que preguntará si queremos continuar la búsqueda
-        Thread pregunta = new HiloPregunta();
-        pregunta.setPriority(10);
-        pregunta.start();
-        
-        // TODO: comprobar:
-        // - si se ha encontrado la contraseña
-        // - si han terminado de buscar
-        // - si la pregunta manda interrumpir todo el programa
     }
 
     public FuerzaBruta() {

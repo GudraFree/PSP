@@ -21,20 +21,26 @@ public class ConjuntoHilos {
     String password;
     ArrayList<String> passwords;
     Thread[] hilos;
+    Thread pregunta;
+    boolean passwordFound;
 
     public ConjuntoHilos(int nProcesos, String password) {
         this.nProcesos = nProcesos;
         this.password = password;
         passwords = new ArrayList();
         hilos = new Thread[nProcesos];
+        passwordFound = false;
         
         try {
             File passwordsTXT = new File("passwords.txt");
             BufferedReader br = new BufferedReader(new FileReader(passwordsTXT));
             String l;
+//            System.out.println("ConjuntoHilos: contraseñas leídas son:");
             while ((l=br.readLine()) != null) {
+//                System.out.print(l+" ");
                 passwords.add(l);
             }
+            System.out.println("");
         } catch (FileNotFoundException e) {
             System.out.println("Error, fichero no encontrado");
         } catch (IOException e) {
@@ -46,11 +52,36 @@ public class ConjuntoHilos {
         int nPasswords = passwords.size();
         int palabrasPorHilo = (int)Math.ceil(nPasswords/(0.0f + nProcesos));
         for (int i=0; i<nProcesos; i++) {
-            hilos[i] = new HiloPasswords(i*palabrasPorHilo,(i+1)*palabrasPorHilo, passwords, password);
+            hilos[i] = new HiloPasswords(i*palabrasPorHilo,Math.min((i+1)*palabrasPorHilo, nPasswords), passwords, password, this);
             hilos[i].start();
         }
     }
     
-    // TODO: método comprobación vida hilos
+    public void lanzaHiloPregunta() {
+        pregunta = new HiloPregunta(this);
+        pregunta.setPriority(10);
+        pregunta.start();
+    }
+    
+    public void hilusInterruptus() {
+        try {
+            for(Thread t : hilos) {
+                if(t!=Thread.currentThread()) {
+                    t.interrupt();
+                    t.join();
+                }
+            }
+            if(pregunta!=Thread.currentThread()) {
+                pregunta.interrupt();
+                pregunta.join();
+            }
+        } catch (InterruptedException e) {
+            System.out.println("Error de interrupción");
+            e.printStackTrace();
+        }
+        
+        if(passwordFound) System.out.println("Se ha encontrado la contraseña");
+        else System.out.println("No se ha encontrado");
+    }
     
 }
