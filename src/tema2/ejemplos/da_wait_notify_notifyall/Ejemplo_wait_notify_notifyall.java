@@ -128,6 +128,7 @@ import java.util.Vector;
             public synchronized void saludoJefe(String nombre){
                 System.out.println("\n****** "+nombre + "-: Buenos días empleados. ******");
             notifyAll();
+//            notify();
             }    
         }   
  
