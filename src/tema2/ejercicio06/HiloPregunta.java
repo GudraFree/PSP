@@ -12,7 +12,6 @@ import java.util.Scanner;
  * @author Perig
  */
 public class HiloPregunta extends Thread {
-    // TODO: implementar interrupción de todos los hilos
     Scanner sc;
     ConjuntoHilos ch;
     public HiloPregunta(ConjuntoHilos ch) {

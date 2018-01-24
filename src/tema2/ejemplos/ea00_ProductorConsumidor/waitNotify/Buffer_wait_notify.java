@@ -1,6 +1,6 @@
-package ea00_ProductorConsumidor.waitNotify;
+package tema2.ejemplos.ea00_ProductorConsumidor.waitNotify;
 
-import ea00_ProductorConsumidor.Buffer;
+import tema2.ejemplos.ea00_ProductorConsumidor.Buffer;
 
 /**
  *

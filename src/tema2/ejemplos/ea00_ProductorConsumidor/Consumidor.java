@@ -1,5 +1,5 @@
 
-package ea00_ProductorConsumidor;
+package tema2.ejemplos.ea00_ProductorConsumidor;
 
 import java.util.Random;
 

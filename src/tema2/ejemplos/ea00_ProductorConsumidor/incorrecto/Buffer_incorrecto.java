@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ea00_ProductorConsumidor.incorrecto;
+package tema2.ejemplos.ea00_ProductorConsumidor.incorrecto;
 
-import ea00_ProductorConsumidor.Buffer;
+import tema2.ejemplos.ea00_ProductorConsumidor.Buffer;
 
 /**
  *
@@ -25,7 +25,6 @@ public class Buffer_incorrecto<E> implements Buffer<E>  {
               
         data[nDatos++] = x;
         imprime("Productor:  ");
-        notifyAll();
       }
     
     public synchronized E get() throws InterruptedException {
@@ -36,7 +35,6 @@ public class Buffer_incorrecto<E> implements Buffer<E>  {
         System.arraycopy(data, 1, data, 0, nDatos);
         data[nDatos] = null;
         imprime("Consumidor: ");
-        notifyAll();
         return x;
     }
     
