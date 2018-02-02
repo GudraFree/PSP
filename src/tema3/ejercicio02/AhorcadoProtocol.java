@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tema3.ejercicioAhorcado;
+package tema3.ejercicio02;
+
+import tema3.ejercicio01.*;
 
 /**
  *
@@ -34,9 +36,12 @@ public class AhorcadoProtocol {
     
     
     public String processInput(String input) {
-        String letra = input.toUpperCase();
+        String letra = "";
+        if(input!=null) letra = input.toUpperCase();
         String output = "";
         String mensaje = "";
+        
+        System.out.println("State: "+state);
         
         switch(state) {
             case WAITING:
@@ -54,12 +59,14 @@ public class AhorcadoProtocol {
                         state = ASKED4LETTER;
                     }
                 } else { //letra encontrada
+                    String newSolvedWord = "";
                     for(int i=0; i<word.length(); i++) {
-                        String c = String.valueOf(word.charAt(i));
-                        solvedWord = "";
-                        if(c.equals(letra)) solvedWord+=c;
-                        else solvedWord+="*";
+                        String l = String.valueOf(word.charAt(i));
+                        String c = String.valueOf(solvedWord.charAt(i));
+                        if(l.equals(letra)) newSolvedWord+=l;
+                        else newSolvedWord+=c;
                     }
+                    solvedWord = newSolvedWord;
                     if(word.equals(solvedWord)) {
                         mensaje = "¡Enhorabuena, ha ganado! ¿Desea jugar otra vez? (s/n)";
                         state = ANOTHER;
@@ -71,13 +78,18 @@ public class AhorcadoProtocol {
                 break;
             case ANOTHER:
                 if(letra.equals("S")) {
-                    state = WAITING;
+                    errors = 0;
+                    word = WORDS[(int)(Math.random()*WORDS.length)];
+                    solvedWord="";
+                    for(int i=0;i<word.length();i++) solvedWord+="*";
+                    mensaje = "Empieza el juego. Introduzca una letra";
+                    state = ASKED4LETTER;
                 } else {
                     mensaje = "Hasta otra";
                 }
         }
         
-        output = mensaje+"$"+solvedWord+"$"+errors;
+        output = mensaje+"-"+solvedWord+"-"+errors;
         return output;
     }
 }

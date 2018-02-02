@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tema3.ejercicioAhorcado;
+package tema3.ejercicio02;
 
+import tema3.ejercicio01.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -82,22 +83,27 @@ public class AhorcadoClient {
         }
         
         System.out.println("¡Bienvenido al juego del Ahorcado!");
-        String l;
+        String l="";
         while((l=in.readLine())!=null) {
-            String[] lectura = l.split("$");
+//            System.out.println("Client: iteración");
+            String[] lectura = l.split("-");
             String mensaje = lectura[0];
             String palabra = lectura[1];
             int errores = Integer.parseInt(lectura[2]);
             System.out.println(AHORCADO[errores]);
             System.out.println("\n    "+palabra+"\n");
             System.out.println(mensaje);
-            if(!mensaje.equals("Fin de la partida")) {
+            if(!mensaje.equals("Hasta otra")) {
                 String letra = sc.nextLine();
                 out.println(letra);
-            }
+//                System.out.println("Cliente: enviada "+letra);
+            } else break;
         }
         
-        // TODO: cerrar flujos, comprobar
+        in.close();
+        out.close();
+        
+        socket.close();
     }
     
 }
