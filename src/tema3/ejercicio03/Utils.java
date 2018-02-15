@@ -11,14 +11,40 @@ package tema3.ejercicio03;
  */
 public class Utils {
     // estados
-    public final int LOGIN_OPTIONS = 0;
-    public final int L_NAME = 1;
-    public final int L_PASS = 2;
-    public final int R_NAME = 3;
-    public final int R_PASS = 4;
-    public final int R_ADMIN = 5;
-    public final int OPTIONS = 6;
-    public final int QUERY_WHO = 7;
-    public final int ASKED4LETTER = 8;
-    public final int ANOTHER = 9;
+    public static final String WAITING = "10";
+    public static final String LOGIN_OPTIONS = "00";
+    public static final String L_NAME = "01";
+    public static final String L_PASS = "02";
+    public static final String R_NAME = "03";
+    public static final String R_PASS = "04";
+    public static final String R_ADMIN = "05";
+    public static final String OPTIONS = "06";
+    public static final String QUERY_WHO = "07";
+    public static final String ASKED4LETTER = "08";
+    public static final String ANOTHER = "09";
+    
+    //operaciones del cliente
+    public static final String LOGIN = "010";
+    public static final String REGISTER = "011";
+    public static final String LOGIN_NAME = "012"; //recibe name
+    public static final String LOGIN_PASS = "013"; //recibe pass
+    public static final String REGISTER_NAME = "014"; //recibe name
+    public static final String REGISTER_PASS = "015"; //recibe pass
+    public static final String REGISTER_ADMIN = "016"; //recibe y/n
+    public static final String PLAY = "017";
+    public static final String QUERY = "018";
+    public static final String QUERY_ADMIN = "019";
+    public static final String QUERY_ADMIN_WHO = "020"; //recibe user
+    public static final String LOGOUT = "021";
+    public static final String SEND_LETTER = "022"; // recibe letter
+    public static final String SEND_ANOTHER = "023"; // recibe y/n
+    
+    // operaciones del servidor
+    public static final String SHOW_LOGIN_MENU = "110";
+    
+    // palabras
+    public static final String[] WORDS = {"FELPUDO","MANDRIL","CALIFATO","EXPROPIAR","WYVERN"};
+    // separador de campos
+    public static final String SEPARATOR = "-";
+    
 }

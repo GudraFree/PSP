@@ -5,7 +5,6 @@
  */
 package tema3.ejercicio03;
 
-import tema3.ejercicio02.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,7 +30,7 @@ public class AhorcadoServerThread extends Thread {
 
             AhorcadoProtocol ap = new AhorcadoProtocol();
 
-            String output = ap.processInput(null);
+            String output = ap.processInput("");
     //        System.out.println("Server: "+output);
             String input;
             out.println(output);

@@ -5,8 +5,6 @@
  */
 package tema3.ejercicio03;
 
-import tema3.ejercicio02.*;
-import tema3.ejercicio01.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -83,22 +81,12 @@ public class AhorcadoClient {
             System.exit(1);
         }
         
-        System.out.println("¡Bienvenido al juego del Ahorcado!");
-        String l="";
+        ClientProtocol cp = new ClientProtocol();
+        String l = "";
         while((l=in.readLine())!=null) {
-//            System.out.println("Client: iteración");
-            String[] lectura = l.split("-");
-            String mensaje = lectura[0];
-            String palabra = lectura[1];
-            int errores = Integer.parseInt(lectura[2]);
-            System.out.println(AHORCADO[errores]);
-            System.out.println("\n    "+palabra+"\n");
-            System.out.println(mensaje);
-            if(!mensaje.equals("Hasta otra")) {
-                String letra = sc.nextLine();
-                out.println(letra);
-//                System.out.println("Cliente: enviada "+letra);
-            } else break;
+            cp.processInput(l);
+            String input = sc.nextLine();
+            out.println(cp.processOutput(input));
         }
         
         in.close();

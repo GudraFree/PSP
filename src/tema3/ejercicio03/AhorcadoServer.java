@@ -5,14 +5,8 @@
  */
 package tema3.ejercicio03;
 
-import tema3.ejercicio02.*;
-import tema3.ejercicio01.*;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 /**
  *
