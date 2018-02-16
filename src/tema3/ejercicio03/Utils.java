@@ -41,6 +41,19 @@ public class Utils {
     
     // operaciones del servidor
     public static final String SHOW_LOGIN_MENU = "110";
+    public static final String L_ASK4NAME = "111";
+    public static final String L_ASK4PASS = "113";
+    public static final String R_ASK4NAME = "112";
+    public static final String R_ASK4PASS = "114";
+    public static final String R_ASK4ADMIN = "115";
+    
+    // errores
+    public static final String L_NAME_NOT_EXIST = "910";
+    public static final String L_PASS_NOT_VALID = "911";
+    public static final String R_NAME_ALREADY_EXIST = "912";
+    public static final String INVALID_MENU_OPTION = "913";
+    public static final String UNEXPECTED_ERROR = "914";
+    public static final String CLIENT_ERROR = "915";
     
     // palabras
     public static final String[] WORDS = {"FELPUDO","MANDRIL","CALIFATO","EXPROPIAR","WYVERN"};

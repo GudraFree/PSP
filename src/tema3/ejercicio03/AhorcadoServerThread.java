@@ -28,7 +28,7 @@ public class AhorcadoServerThread extends Thread {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            AhorcadoProtocol ap = new AhorcadoProtocol();
+            ServerProtocol ap = new ServerProtocol();
 
             String output = ap.processInput("");
     //        System.out.println("Server: "+output);
