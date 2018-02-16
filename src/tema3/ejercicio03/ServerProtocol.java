@@ -5,6 +5,11 @@
  */
 package tema3.ejercicio03;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import static tema3.ejercicio03.Utils.*;
 
 /**
@@ -13,40 +18,55 @@ import static tema3.ejercicio03.Utils.*;
  */
 public class ServerProtocol {
     private String state;
+    // db parameters
+    private String db_driver = "com.mysql.jdbc.Driver";
+    private String db_url = "jdbc:mysql://localhost/ahorcado";
+    private String db_user = "root";
+    private String db_password = "";
+    private Connection connection;
+    private String name_sql = "select * from usuario where nick=?";
 
     public ServerProtocol() {
         state = WAITING;
+        try {
+            Class.forName(db_driver);
+            connection = DriverManager.getConnection(db_url,db_user,db_password);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error, clase no encontrada");
+        } catch (SQLException e) {
+            System.out.println("Error de SQL");
+        }
     }
     
     
     
-    public String processInput(String input) { // input del palo opClient:[arg:arg2]
+    public String processInput(String input) { // input del palo opClient-[arg-arg2]
         String[] command = input.split(SEPARATOR);
-        String output = ""; // output del palo opServer:[datos]
+        String output = ""; // output del palo opServer-[datos-datos]
         System.out.println("Input: "+input);
         
         switch(state) {
             case WAITING:
                 System.out.println("State: WAITING");
-                output += SHOW_LOGIN_MENU;
+                output = SHOW_LOGIN_MENU;
                 state = LOGIN_OPTIONS;
                 break;
             case LOGIN_OPTIONS:
                 System.out.println("State: LOGIN_OPTIONS");
                 switch(command[0]) {
                     case LOGIN:
-                        output += L_ASK4NAME;
+                        output = L_ASK4NAME;
                         state = L_NAME;
                         break;
                     case REGISTER:
-                        output += R_ASK4NAME;
+                        output = R_ASK4NAME;
                         state = R_NAME;
                         break;
                     case CLIENT_ERROR:
-                        output += SHOW_LOGIN_MENU+SEPARATOR+INVALID_MENU_OPTION;
+                        output = SHOW_LOGIN_MENU+SEPARATOR+INVALID_MENU_OPTION;
                         break;
                     default:
-                        output += SHOW_LOGIN_MENU+SEPARATOR+UNEXPECTED_ERROR;
+                        output = SHOW_LOGIN_MENU+SEPARATOR+UNEXPECTED_ERROR;
                 }
                 break;
             case L_NAME:
@@ -55,17 +75,24 @@ public class ServerProtocol {
                     String receivedName = command[1];
                     System.out.println("Received name: "+receivedName);
                     // TODO: consultar receivedName
-                    boolean validName = false; //consulta aquí; placeholder
+                    boolean validName = false;
+                    try{
+                        PreparedStatement ps = connection.prepareStatement(name_sql);
+                        ps.setString(1,receivedName);
+                        ResultSet rs = ps.executeQuery();
+                        validName = rs.next();
+                    } catch (SQLException e) {}
+                    
                     if(validName) {
-                        output += L_ASK4PASS;
+                        output = L_ASK4PASS;
                         state = L_PASS;
                     } else {
                         state = LOGIN_OPTIONS;
-                        output += SHOW_LOGIN_MENU + SEPARATOR + L_NAME_NOT_EXIST;
+                        output = SHOW_LOGIN_MENU + SEPARATOR + L_NAME_NOT_EXIST;
                     }
                 } else {
                     System.out.println("Error de comando equivocado");
-                    output += SHOW_LOGIN_MENU+SEPARATOR+UNEXPECTED_ERROR;
+                    output = SHOW_LOGIN_MENU+SEPARATOR+UNEXPECTED_ERROR;
                     state = LOGIN_OPTIONS;
                 }
                 break;
