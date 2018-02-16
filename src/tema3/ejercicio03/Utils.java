@@ -10,6 +10,9 @@ package tema3.ejercicio03;
  * @author Perig
  */
 public class Utils {
+    // separador de campos
+    public static final String SEPARATOR = "-";
+    
     // estados
     public static final String WAITING = "10";
     public static final String LOGIN_OPTIONS = "00";
@@ -34,7 +37,7 @@ public class Utils {
     public static final String PLAY = "017";
     public static final String QUERY = "018";
     public static final String QUERY_ADMIN = "019";
-    public static final String QUERY_ADMIN_WHO = "020"; //recibe user
+    public static final String SEND_USER = "020"; //recibe user
     public static final String LOGOUT = "021";
     public static final String SEND_LETTER = "022"; // recibe letter
     public static final String SEND_ANOTHER = "023"; // recibe y/n
@@ -46,6 +49,26 @@ public class Utils {
     public static final String R_ASK4NAME = "112";
     public static final String R_ASK4PASS = "114";
     public static final String R_ASK4ADMIN = "115";
+    public static final String SHOW_GAME_MENU = "116";
+    public static final String SHOW_OWN_QUERY = "117";
+    public static final String ASK4USER = "118";
+    public static final String SHOW_USER_QUERY = "119";
+    public static final String ASK4LETTER = "120";
+    public static final String ASK4ANOTHER = "121";
+    
+    // mensajes del servidor
+    public static final String VALID_LOGIN = "710";
+    public static final String VALID_REGISTER = "711";
+    public static final String START_GAME = "712";
+    public static final String RIGHT_LETTER = "713";
+    public static final String WRONG_LETTER = "714";
+    public static final String VICTORY = "715";
+    public static final String LOSE = "716";
+    
+    // mensajes error cliente
+    public static final String M_UNEXPECTED_ERROR = "Error no esperado. ";
+    public static final String M_DEFAULT_ERROR = "Error por defecto. Este error no debería producirse. ";
+    public static final String M_INVALID_OPTION = "Error, opción inválida. ";
     
     // errores
     public static final String L_NAME_NOT_EXIST = "910";
@@ -54,10 +77,52 @@ public class Utils {
     public static final String INVALID_MENU_OPTION = "913";
     public static final String UNEXPECTED_ERROR = "914";
     public static final String CLIENT_ERROR = "915";
+    public static final String USER_NOT_EXIST = "916";
     
-    // palabras
+    // arrays
     public static final String[] WORDS = {"FELPUDO","MANDRIL","CALIFATO","EXPROPIAR","WYVERN"};
-    // separador de campos
-    public static final String SEPARATOR = "-";
+    public static final String[] AHORCADO = { 
+"------|\n" +
+"|     \n" +
+"|    \n" +
+"|    \n" +
+"|\n" +
+"====", 
+"------|\n" +
+"|     O\n" +
+"|    \n" +
+"|    \n" +
+"|\n" +
+"====",
+"------|\n" +
+"|     O\n" +
+"|     |\n" +
+"|    \n" +
+"|\n" +
+"====",
+"------|\n" +
+"|     O\n" +
+"|    /|\n" +
+"|    \n" +
+"|\n" +
+"====",
+"------|\n" +
+"|     O\n" +
+"|    /|\\\n" +
+"|    \n" +
+"|\n" +
+"====",
+"------|\n" +
+"|     O\n" +
+"|    /|\\\n" +
+"|    / \n" +
+"|\n" +
+"====",
+"------|\n" +
+"|     O\n" +
+"|    /|\\\n" +
+"|    / \\\n" +
+"|\n" +
+"====", };
     
 }

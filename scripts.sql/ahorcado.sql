@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-02-2018 a las 16:34:49
+-- Tiempo de generación: 16-02-2018 a las 22:26:25
 -- Versión del servidor: 10.1.28-MariaDB
 -- Versión de PHP: 7.1.11
 
@@ -92,9 +92,18 @@ CREATE TABLE `usuario` (
   `pass` varchar(100) NOT NULL,
   `n_ganadas` int(11) DEFAULT '0',
   `n_jugadas` int(11) DEFAULT '0',
-  `tiempo_juego` int(11) DEFAULT NULL,
+  `tiempo_juego` int(11) NOT NULL DEFAULT '0',
   `rol` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`nick`, `pass`, `n_ganadas`, `n_jugadas`, `tiempo_juego`, `rol`) VALUES
+('admin', 'admin', 1, 2, 46959, 'admin'),
+('Gudra', 'patata', 2, 2, 47777, 'admin'),
+('user', 'user', 1, 1, 10480, 'user');
 
 --
 -- Índices para tablas volcadas

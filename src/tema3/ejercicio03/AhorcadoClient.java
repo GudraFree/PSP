@@ -18,49 +18,7 @@ import java.util.Scanner;
  * @author Perig
  */
 public class AhorcadoClient {
-    private static final String[] AHORCADO = { 
-"------|\n" +
-"|     \n" +
-"|    \n" +
-"|    \n" +
-"|\n" +
-"====", 
-"------|\n" +
-"|     O\n" +
-"|    \n" +
-"|    \n" +
-"|\n" +
-"====",
-"------|\n" +
-"|     O\n" +
-"|     |\n" +
-"|    \n" +
-"|\n" +
-"====",
-"------|\n" +
-"|     O\n" +
-"|    /|\n" +
-"|    \n" +
-"|\n" +
-"====",
-"------|\n" +
-"|     O\n" +
-"|    /|\\\n" +
-"|    \n" +
-"|\n" +
-"====",
-"------|\n" +
-"|     O\n" +
-"|    /|\\\n" +
-"|    / \n" +
-"|\n" +
-"====",
-"------|\n" +
-"|     O\n" +
-"|    /|\\\n" +
-"|    / \\\n" +
-"|\n" +
-"====", };
+    
     
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
