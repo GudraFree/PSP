@@ -23,6 +23,7 @@ public class ColeccionPartidas {
         for (PartidaThread pt : partidas) {
             if(!pt.isFull()) {
                 // TODO: unirse a partida
+                pt.addPlayer(t);
                 encontrado = true;
             }
         }
