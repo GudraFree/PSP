@@ -43,6 +43,7 @@ public class Utils {
     public static final String LOGOUT = "021";
     public static final String SEND_LETTER = "022"; // recibe letter
     public static final String SEND_ANOTHER = "023"; // recibe y/n
+    public static final String PLEASE_KILL_ME = "024";
     
     // operaciones del servidor
     public static final String SHOW_LOGIN_MENU = "110";
@@ -66,6 +67,7 @@ public class Utils {
     public static final String WRONG_LETTER = "714";
     public static final String VICTORY = "715";
     public static final String LOSE = "716";
+    public static final String END_CLIENT_LIFE = "717";
     
     // mensajes error cliente
     public static final String M_UNEXPECTED_ERROR = "Error no esperado. ";

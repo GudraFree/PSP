@@ -5,7 +5,6 @@
  */
 package tema3.ejercicio04;
 
-import tema3.ejercicio03.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 
@@ -14,6 +13,8 @@ import java.net.ServerSocket;
  * @author Perig
  */
 public class AhorcadoServer {
+    static ColeccionPartidas cp;
+    
     public static void main(String[] args) throws IOException {
         System.out.println("Server: empieza ejecución");
         int port = 4444;
@@ -26,9 +27,11 @@ public class AhorcadoServer {
         }
         System.out.println("Server: conectado a puerto "+port);
         
+        cp = new ColeccionPartidas();
+        
         boolean listening = true;
         while(listening) {
-            new AhorcadoServerThread(serverSocket.accept()).start();
+            new AhorcadoServerThread(serverSocket.accept(), cp).start();
         }
         
         serverSocket.close();

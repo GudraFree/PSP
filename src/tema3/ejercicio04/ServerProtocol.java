@@ -15,7 +15,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
-import static tema3.ejercicio03.Utils.*;
+import static tema3.ejercicio04.Utils.*;
 
 /**
  *
@@ -85,6 +85,9 @@ public class ServerProtocol {
                         break;
                     case CLIENT_ERROR:
                         output = SHOW_LOGIN_MENU+SEPARATOR+INVALID_MENU_OPTION;
+                        break;
+                    case PLEASE_KILL_ME:
+                        output = END_CLIENT_LIFE;
                         break;
                     default:
                         output = SHOW_LOGIN_MENU+SEPARATOR+UNEXPECTED_ERROR;

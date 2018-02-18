@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package tema3.ejercicio04;
-import tema3.ejercicio03.*;
-import static tema3.ejercicio03.Utils.*;
+import static tema3.ejercicio04.Utils.*;
 /**
  *
  * @author Perig
@@ -183,6 +182,10 @@ public class ClientProtocol {
                 System.out.println("¿Desea jugar otra vez? (y/n):");
                 state = ANOTHER;
                 break;
+            case END_CLIENT_LIFE:
+                System.out.println("Hasta otra");
+                System.exit(0);
+                break;
         }
     }
     
@@ -198,8 +201,8 @@ public class ClientProtocol {
                         output = REGISTER;
                         break;
                     case "3":
-                        System.out.println("Hasta la próxima");
-                        System.exit(0);
+                        output = PLEASE_KILL_ME;
+                        break;
                     default:
                         output = CLIENT_ERROR;
                 }

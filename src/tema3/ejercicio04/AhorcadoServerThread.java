@@ -5,7 +5,6 @@
  */
 package tema3.ejercicio04;
 
-import tema3.ejercicio03.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,16 +17,21 @@ import java.net.Socket;
  */
 public class AhorcadoServerThread extends Thread {
     Socket socket;
+    PrintWriter out;
+    BufferedReader in;
+    ColeccionPartidas cp;
+    PartidaThread pt;
 
-    public AhorcadoServerThread(Socket socket) {
+    public AhorcadoServerThread(Socket socket, ColeccionPartidas cp) {
         this.socket = socket;
+        this.cp = cp;
     }
 
     @Override
     public void run() {
         try {
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             ServerProtocol ap = new ServerProtocol();
 
@@ -40,7 +44,10 @@ public class AhorcadoServerThread extends Thread {
                 output = ap.processInput(input);
     //            System.out.println(output);
                 out.println(output);
-                if(input.equals("Hasta otra")) break;
+                if(output.equals(Utils.END_CLIENT_LIFE)) {
+                    System.out.println("Terminando conexión con cliente de manera natural");
+                    break;
+                }
             }
 
             in.close();
