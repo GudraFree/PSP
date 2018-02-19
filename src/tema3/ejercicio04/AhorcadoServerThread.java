@@ -16,15 +16,15 @@ import java.net.Socket;
  * @author Perig
  */
 public class AhorcadoServerThread extends Thread {
-    Socket socket;
+    public Socket socket;
     PrintWriter out;
     BufferedReader in;
-    ColeccionPartidas cp;
+    AhorcadoServer s;
     PartidaThread pt;
 
-    public AhorcadoServerThread(Socket socket, ColeccionPartidas cp) {
+    public AhorcadoServerThread(Socket socket, AhorcadoServer s) {
         this.socket = socket;
-        this.cp = cp;
+        this.s = s;
     }
 
     @Override
@@ -43,6 +43,13 @@ public class AhorcadoServerThread extends Thread {
             while((input=in.readLine())!= null) {
                 output = ap.processInput(input);
     //            System.out.println(output);
+                if(output.equals(Utils.START_ONLINE_GAME)) {
+                    System.out.println("Empezado juego online");
+                    s.searchGame(socket);
+                    try {
+                        s.partidaPendiente.join();
+                    } catch (InterruptedException e) {}
+                }
                 out.println(output);
                 if(output.equals(Utils.END_CLIENT_LIFE)) {
                     System.out.println("Terminando conexión con cliente de manera natural");

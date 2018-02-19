@@ -11,6 +11,7 @@ import static tema3.ejercicio04.Utils.*;
  */
 public class ClientProtocol {
     private String state;
+    private boolean shouldAsk4Input = true;
     private boolean isAdmin = false;
 
     public ClientProtocol() {
@@ -49,6 +50,7 @@ public class ClientProtocol {
                 state = LOGIN_OPTIONS;
                 break;
             case L_ASK4NAME:
+                shouldAsk4Input = true;
                 if(command.length>1) { // se ha añadido un argumento extra, un mensaje de error
                     switch(command[1]) {
                         case L_PASS_NOT_VALID:
@@ -65,22 +67,27 @@ public class ClientProtocol {
                 state = L_NAME; 
                 break;
             case L_ASK4PASS:
+                shouldAsk4Input = true;
                 System.out.println("Introduzca contraseña:");
                 state = L_PASS;
                 break;
             case R_ASK4NAME:
+                shouldAsk4Input = true;
                 System.out.println("Introduzca nombre:");
                 state = R_NAME;
                 break;
             case R_ASK4PASS:
+                shouldAsk4Input = true;
                 System.out.println("Introduzca contraseña:");
                 state = R_PASS;
                 break;
             case R_ASK4ADMIN:
+                shouldAsk4Input = true;
                 System.out.println("¿Es admin? (s/n):");
                 state = R_ADMIN;
                 break;
             case SHOW_GAME_MENU:
+                shouldAsk4Input = true;
                 if(command.length>1) {
                     switch(command[1]) {
                         case VALID_LOGIN:
@@ -108,16 +115,18 @@ public class ClientProtocol {
                 }
                 System.out.println("Elija una opción");
                 System.out.println("\t1. Jugar");
-                System.out.println("\t2. Consultar tus estadísticas");
+                System.out.println("\t2. Jugar online");
+                System.out.println("\t3. Consultar tus estadísticas");
                 if(isAdmin) {
-                    System.out.println("\t3. Consultar estadísticas de cualquier usuario");
-                    System.out.println("\t4. Salir");
+                    System.out.println("\t4. Consultar estadísticas de cualquier usuario");
+                    System.out.println("\t5. Salir");
                 } else {
-                    System.out.println("\t3. Salir");
+                    System.out.println("\t4. Salir");
                 }
                 state = OPTIONS;
                 break;
             case ASK4USER:
+                shouldAsk4Input = true;
                 if(command.length>1) {
                     switch(command[1]) {
                         case USER_NOT_EXIST:
@@ -134,6 +143,7 @@ public class ClientProtocol {
                 state = QUERY_WHO;
                 break;
             case ASK4LETTER:
+                shouldAsk4Input = true;
                 if (command.length==4) { // op:solvedWord:errors:mensaje
                     System.out.println(AHORCADO[Integer.parseInt(command[2])]); //imprime ahorcado
                     System.out.println(command[1]); // imprime la palabra mostrada (con asteriscos y letras)
@@ -156,6 +166,7 @@ public class ClientProtocol {
                 state = ASKED4LETTER;
                 break;
             case ASK4ANOTHER:
+                shouldAsk4Input = true;
                 if (command.length==4) { // op:solvedWord:errors:mensaje
                     System.out.println(AHORCADO[Integer.parseInt(command[2])]); //imprime ahorcado
                     System.out.println(command[1]); // imprime la palabra mostrada (con asteriscos y letras)
@@ -185,6 +196,10 @@ public class ClientProtocol {
             case END_CLIENT_LIFE:
                 System.out.println("Hasta otra");
                 System.exit(0);
+                break;
+            case WAITING_FOR_PLAYERS:
+                System.out.println("Esperando a "+command[1]+" jugadores");
+                shouldAsk4Input = false;
                 break;
         }
     }
@@ -228,13 +243,16 @@ public class ClientProtocol {
                         output = PLAY;
                         break;
                     case "2":
-                        output = QUERY;
+                        output = PLAY_ONLINE;
                         break;
                     case "3":
+                        output = QUERY;
+                        break;
+                    case "4":
                         if(isAdmin) output = QUERY_ADMIN;
                         else output = LOGOUT;
                         break;
-                    case "4":
+                    case "5": 
                         if(isAdmin) output = LOGOUT;
                         else output = CLIENT_ERROR;
                         break;
@@ -256,5 +274,9 @@ public class ClientProtocol {
             
         }
         return output;
+    }
+    
+    public boolean shouldWrite() {
+        return shouldAsk4Input;
     }
 }

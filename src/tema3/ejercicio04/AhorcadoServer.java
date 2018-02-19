@@ -7,15 +7,17 @@ package tema3.ejercicio04;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 /**
  *
  * @author Perig
  */
 public class AhorcadoServer {
-    static ColeccionPartidas cp;
+    public PartidaThread partidaPendiente = null;
     
     public static void main(String[] args) throws IOException {
+        AhorcadoServer s = new AhorcadoServer();
         System.out.println("Server: empieza ejecución");
         int port = 4444;
         ServerSocket serverSocket = null;
@@ -27,16 +29,29 @@ public class AhorcadoServer {
         }
         System.out.println("Server: conectado a puerto "+port);
         
-        cp = new ColeccionPartidas();
-        
         boolean listening = true;
         while(listening) {
-            new AhorcadoServerThread(serverSocket.accept(), cp).start();
+            new AhorcadoServerThread(serverSocket.accept(), s).start();
         }
         
         serverSocket.close();
     }
     
+    public synchronized void searchGame(Socket player) {
+        if(partidaPendiente==null) {
+            partidaPendiente = new PartidaThread(this);
+            System.out.println("Creado PartidaThread");
+            partidaPendiente.addPlayer(player);
+            System.out.println("Añadido jugador");
+            partidaPendiente.start();
+            System.out.println("Lanzado hilo partida");
+        } else {
+            partidaPendiente.addPlayer(player);
+            System.out.println("Añadido jugador");
+        }
+    }
     
-    
+    public synchronized void chechIfFull() {
+        if(partidaPendiente.isFull()) partidaPendiente = null;
+    }
 }

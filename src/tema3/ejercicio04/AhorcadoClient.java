@@ -5,7 +5,6 @@
  */
 package tema3.ejercicio04;
 
-import tema3.ejercicio03.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -44,8 +43,11 @@ public class AhorcadoClient {
         String l = "";
         while((l=in.readLine())!=null) {
             cp.processInput(l);
-            String input = sc.nextLine();
-            out.println(cp.processOutput(input));
+            String input = "";
+            if(cp.shouldWrite()) {
+                input = sc.nextLine();
+                out.println(cp.processOutput(input));
+            }
         }
         
         in.close();

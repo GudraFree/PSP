@@ -5,7 +5,6 @@
  */
 package tema3.ejercicio04;
 
-import tema3.ejercicio03.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -275,6 +274,9 @@ public class ServerProtocol {
                         break;
                     case CLIENT_ERROR:
                         output = SHOW_GAME_MENU+SEPARATOR+INVALID_MENU_OPTION;
+                        break;
+                    case PLAY_ONLINE:
+                        output = START_ONLINE_GAME;
                         break;
                     default:
                         output = SHOW_GAME_MENU+SEPARATOR+UNEXPECTED_ERROR;

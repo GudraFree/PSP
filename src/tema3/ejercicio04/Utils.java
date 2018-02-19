@@ -5,8 +5,6 @@
  */
 package tema3.ejercicio04;
 
-import tema3.ejercicio03.*;
-
 /**
  *
  * @author Perig
@@ -44,6 +42,7 @@ public class Utils {
     public static final String SEND_LETTER = "022"; // recibe letter
     public static final String SEND_ANOTHER = "023"; // recibe y/n
     public static final String PLEASE_KILL_ME = "024";
+    public static final String PLAY_ONLINE = "025";
     
     // operaciones del servidor
     public static final String SHOW_LOGIN_MENU = "110";
@@ -58,16 +57,20 @@ public class Utils {
     public static final String SHOW_USER_QUERY = "119";
     public static final String ASK4LETTER = "120";
     public static final String ASK4ANOTHER = "121";
+    public static final String START_ONLINE_GAME = "122";
     
     // mensajes del servidor
-    public static final String VALID_LOGIN = "710";
-    public static final String VALID_REGISTER = "711";
-    public static final String START_GAME = "712";
-    public static final String RIGHT_LETTER = "713";
-    public static final String WRONG_LETTER = "714";
-    public static final String VICTORY = "715";
-    public static final String LOSE = "716";
-    public static final String END_CLIENT_LIFE = "717";
+    public static final String VALID_LOGIN = "210";
+    public static final String VALID_REGISTER = "211";
+    public static final String START_GAME = "212";
+    public static final String RIGHT_LETTER = "213";
+    public static final String WRONG_LETTER = "214";
+    public static final String VICTORY = "215";
+    public static final String LOSE = "216";
+    public static final String END_CLIENT_LIFE = "217";
+    
+    // mensajes de PartidaThread
+    public static final String WAITING_FOR_PLAYERS = "310"; // seguido de n players
     
     // mensajes error cliente
     public static final String M_UNEXPECTED_ERROR = "Error no esperado. ";
