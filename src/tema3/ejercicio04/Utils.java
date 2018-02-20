@@ -14,7 +14,6 @@ public class Utils {
     public static final String SEPARATOR = "-";
     
     // estados
-    public static final String WAITING = "10";
     public static final String LOGIN_OPTIONS = "00";
     public static final String L_NAME = "01";
     public static final String L_PASS = "02";
@@ -25,6 +24,11 @@ public class Utils {
     public static final String QUERY_WHO = "07";
     public static final String ASKED4LETTER = "08";
     public static final String ANOTHER = "09";
+    public static final String WAITING_LOGIN = "10";
+    public static final String WAITING_ONLINE = "11";
+    public static final String ASKED4LETTER_ONLINE = "12";
+    public static final String WAITING_GAME_MENU = "13";
+    public static final String WAIT_END_GAME_ONLINE = "14";
     
     //operaciones del cliente
     public static final String LOGIN = "010";
@@ -58,6 +62,7 @@ public class Utils {
     public static final String ASK4LETTER = "120";
     public static final String ASK4ANOTHER = "121";
     public static final String START_ONLINE_GAME = "122";
+    public static final String ASK4LETTER_ONLINE = "123";
     
     // mensajes del servidor
     public static final String VALID_LOGIN = "210";
@@ -68,6 +73,9 @@ public class Utils {
     public static final String VICTORY = "215";
     public static final String LOSE = "216";
     public static final String END_CLIENT_LIFE = "217";
+    public static final String LOSE_ONLINE = "218";
+    public static final String VICTORY_ONLINE = "219";
+    public static final String LETTER_TAKEN = "220";
     
     // mensajes de PartidaThread
     public static final String WAITING_FOR_PLAYERS = "310"; // seguido de n players

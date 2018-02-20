@@ -19,13 +19,15 @@ public class PartidaThread extends Thread {
     private final int MAX_PLAYERS = 3;
     private int playerCount;
     private ArrayList<Socket> players;
-    Partida partida;
-    AhorcadoServer s;
+    private Partida partida;
+    private AhorcadoServer s;
+    private Clientes hilosCliente;
 
     public PartidaThread(AhorcadoServer s) {
         playerCount = 0;
         players = new ArrayList();
         partida = new Partida();
+        hilosCliente = new Clientes();
         this.s = s;
     }
 
@@ -46,12 +48,17 @@ public class PartidaThread extends Thread {
             } catch (InterruptedException e) {
             }
         }
-        s.chechIfFull();
+        s.chechIfFull(); // para settear la partida pendiente del server de esta instancia a null
+        
+        for(Socket player : players) {
+                OnlineClientThread oct = new OnlineClientThread(player, this);
+                hilosCliente.add(oct);
+                oct.start();
+        }
+        
         try {
-            for(Socket player : players) {
-                    new PrintWriter(player.getOutputStream(), true).println(ASK4LETTER+SEPARATOR+partida.getInfoNoMessage()+SEPARATOR+START_GAME);
-            }
-        } catch (IOException e) {}
+            while(hilosCliente.someIsPlaying()) Thread.sleep(100);
+        } catch (InterruptedException e) {}
     }
     
     
@@ -64,5 +71,30 @@ public class PartidaThread extends Thread {
         players.add(t);
         playerCount = players.size();
         notifyAll();
+    }
+    
+    public synchronized Partida getPartida() {
+        return partida;
+    }
+    
+    public class Clientes {
+        private ArrayList<OnlineClientThread> hilosCliente;
+
+        public Clientes() {
+            hilosCliente = new ArrayList();
+        }
+        
+        public void add(OnlineClientThread t) {
+            hilosCliente.add(t);
+        }
+        
+        public boolean someIsPlaying() {
+            boolean someIsPlaying = false;
+            for(OnlineClientThread oct : hilosCliente) {
+                someIsPlaying = someIsPlaying || oct.isAlive();
+            }
+            return someIsPlaying;
+        }
+        
     }
 }

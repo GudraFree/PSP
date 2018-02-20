@@ -33,7 +33,7 @@ public class AhorcadoServerThread extends Thread {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            ServerProtocol ap = new ServerProtocol();
+            ServerProtocol ap = new ServerProtocol(Utils.WAITING_LOGIN);
 
             String output = ap.processInput("");
     //        System.out.println("Server: "+output);
@@ -48,7 +48,11 @@ public class AhorcadoServerThread extends Thread {
                     s.searchGame(socket);
                     try {
                         s.partidaPendiente.join();
-                    } catch (InterruptedException e) {}
+                    } catch (InterruptedException e) {
+                    } finally {
+                        ap.setState(Utils.WAITING_GAME_MENU);
+                        output = ap.processInput("");
+                    }
                 }
                 out.println(output);
                 if(output.equals(Utils.END_CLIENT_LIFE)) {

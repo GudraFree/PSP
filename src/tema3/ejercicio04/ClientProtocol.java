@@ -15,7 +15,7 @@ public class ClientProtocol {
     private boolean isAdmin = false;
 
     public ClientProtocol() {
-        state = WAITING;
+        state = WAITING_LOGIN;
     }
     
     public void processInput(String input) { // interpreta el paquete de datos recibido del servidor
@@ -201,6 +201,32 @@ public class ClientProtocol {
                 System.out.println("Esperando a "+command[1]+" jugadores");
                 shouldAsk4Input = false;
                 break;
+            case ASKED4LETTER_ONLINE:
+                shouldAsk4Input = true;
+                if (command.length==4) { // op:solvedWord:errors:mensaje
+                    System.out.println(AHORCADO[Integer.parseInt(command[2])]); //imprime ahorcado
+                    System.out.println(command[1]); // imprime la palabra mostrada (con asteriscos y letras)
+                    switch(command[3]) {
+                        case START_GAME:
+                            System.out.print("Empieza el juego. ");
+                            break;
+                        case RIGHT_LETTER:
+                            System.out.print("¡Acierto! ");
+                            break;
+                        case WRONG_LETTER:
+                            System.out.print("Error... ");
+                            break;
+                        case LETTER_TAKEN:
+                            System.out.print("Letra ya cogida. ");
+                        case INVALID_MENU_OPTION:
+                            System.out.print(M_INVALID_OPTION);
+                            break;
+                    }
+                }
+                System.out.println("Introduzca una letra:");
+                state = ASKED4LETTER_ONLINE;
+                break;
+                
         }
     }
     
@@ -270,6 +296,11 @@ public class ClientProtocol {
                 break;
             case ANOTHER:
                 output = SEND_ANOTHER + SEPARATOR + input;
+                break;
+            case ASKED4LETTER_ONLINE:
+                if(input.length() == 1) {
+                    output = SEND_LETTER + SEPARATOR + input;
+                } else output = CLIENT_ERROR;
                 break;
             
         }

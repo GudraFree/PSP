@@ -5,8 +5,7 @@
  */
 package tema3.ejercicio04;
 
-import tema3.ejercicio03.*;
-import static tema3.ejercicio03.Utils.*;
+import static tema3.ejercicio04.Utils.*;
 
 /**
  *
@@ -28,12 +27,12 @@ public class Partida {
         for(int i=0;i<word.length();i++) solvedWord+="*";
     }
     
-    public String getInfo() {
+    public synchronized String getInfo() {
         System.out.println("Word: "+word);
         return solvedWord + SEPARATOR + errors + SEPARATOR + mensaje;
     }
     
-    public String getInfoNoMessage() {
+    public synchronized String getInfoNoMessage() {
         System.out.println("Word: "+word);
         return solvedWord + SEPARATOR + errors;
     }
@@ -65,6 +64,43 @@ public class Partida {
             } else {
                 mensaje = RIGHT_LETTER;
                 state = ASKED4LETTER;
+            }
+        }
+        return state;
+    }
+    
+    public synchronized String checkLetterOnline(String lett) {
+        String letra = lett.toUpperCase();
+        String state = "";
+        if(word.indexOf(letra)<0) { //letra no encontrada
+            errors++;
+            if(errors==MAX_ERRORS) {
+                mensaje = LOSE_ONLINE;
+                state = WAIT_END_GAME_ONLINE;
+            } else {
+                mensaje = WRONG_LETTER;
+                state = ASKED4LETTER_ONLINE;
+            }
+        } else { //letra encontrada
+            if(solvedWord.contains(lett)) {
+                mensaje = LETTER_TAKEN;
+                state = ASKED4LETTER_ONLINE;
+            } else {
+                String newSolvedWord = "";
+                for(int i=0; i<word.length(); i++) {
+                    String l = String.valueOf(word.charAt(i));
+                    String c = String.valueOf(solvedWord.charAt(i));
+                    if(l.equals(letra)) newSolvedWord+=l;
+                    else newSolvedWord+=c;
+                }
+                solvedWord = newSolvedWord;
+                if(word.equals(solvedWord)) {
+                    mensaje = VICTORY_ONLINE;
+    //                state = ANOTHER;
+                } else {
+                    mensaje = RIGHT_LETTER;
+                    state = ASKED4LETTER_ONLINE;
+                }
             }
         }
         return state;
