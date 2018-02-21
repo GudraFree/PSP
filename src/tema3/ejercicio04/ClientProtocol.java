@@ -201,12 +201,12 @@ public class ClientProtocol {
                 System.out.println("Esperando a "+command[1]+" jugadores");
                 shouldAsk4Input = false;
                 break;
-            case ASKED4LETTER_ONLINE:
+            case ASK4LETTER_ONLINE:
                 shouldAsk4Input = true;
-                if (command.length==4) { // op:solvedWord:errors:mensaje
-                    System.out.println(AHORCADO[Integer.parseInt(command[2])]); //imprime ahorcado
+                if (command.length==4) { // op:solvedWord:mensaje:error
+                    System.out.println(AHORCADO[Integer.parseInt(command[3])]); //imprime ahorcado
                     System.out.println(command[1]); // imprime la palabra mostrada (con asteriscos y letras)
-                    switch(command[3]) {
+                    switch(command[2]) {
                         case START_GAME:
                             System.out.print("Empieza el juego. ");
                             break;
@@ -226,7 +226,14 @@ public class ClientProtocol {
                 System.out.println("Introduzca una letra:");
                 state = ASKED4LETTER_ONLINE;
                 break;
-                
+            case I_LOST_ONLINE:
+                shouldAsk4Input = false;
+                System.out.println("He perdido...");
+                break;
+            case I_WON_ONLINE:
+                shouldAsk4Input = false;
+                System.out.println("¡He ganado!");
+                break;
         }
     }
     

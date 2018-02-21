@@ -28,7 +28,8 @@ public class Utils {
     public static final String WAITING_ONLINE = "11";
     public static final String ASKED4LETTER_ONLINE = "12";
     public static final String WAITING_GAME_MENU = "13";
-    public static final String WAIT_END_GAME_ONLINE = "14";
+    public static final String LOST_ONLINE = "14";
+    public static final String WON_ONLINE = "15";
     
     //operaciones del cliente
     public static final String LOGIN = "010";
@@ -63,6 +64,8 @@ public class Utils {
     public static final String ASK4ANOTHER = "121";
     public static final String START_ONLINE_GAME = "122";
     public static final String ASK4LETTER_ONLINE = "123";
+    public static final String I_LOST_ONLINE = "124";
+    public static final String I_WON_ONLINE = "125";
     
     // mensajes del servidor
     public static final String VALID_LOGIN = "210";

@@ -20,11 +20,12 @@ public class OnlineClientThread extends Thread {
     PartidaThread pt;
     PrintWriter out;
     BufferedReader in;
-    // TODO: IMPORTANTE: tengo que llevar la cuenta de errores aquí, no en el objeto Partida de PartidaThread
+    int errors;
 
     public OnlineClientThread(Socket player, PartidaThread pt) {
         this.player = player;
         this.pt = pt;
+        errors = 0;
     }
 
     @Override
@@ -33,16 +34,19 @@ public class OnlineClientThread extends Thread {
             out = new PrintWriter(player.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(player.getInputStream()));
 
-            ServerProtocol sp = new ServerProtocol(Utils.WAITING_ONLINE);
-            sp.setPartida(pt.getPartida());
+            OnlineGameProtocol p = new OnlineGameProtocol(this);
+            p.setPartida(pt.getPartida());
 
-            String output = sp.processInput("");
+            String output = p.processInput("");
     //        System.out.println("Server: "+output);
             String input;
             out.println(output);
 
             while((input=in.readLine())!= null) {
-                output = sp.processInput(input);
+                output = p.processInput(input);
+                if(Thread.currentThread().isInterrupted()) {
+                    break;
+                }
                 out.println(output);
                 // TODO: terminar este bucle 
             }
@@ -55,6 +59,11 @@ public class OnlineClientThread extends Thread {
         
     }
     
-   
+    public int getErrors() {
+        return errors;
+    }
     
+    public void setErrors(int errors) {
+        this.errors = errors;
+    }
 }

@@ -351,34 +351,6 @@ public class ServerProtocol {
                     state = ANOTHER;
                 }
                 break;
-            case WAITING_ONLINE:
-                System.out.println("State: WAITING_ONLINE");
-                startTime = System.currentTimeMillis();
-                output = ASK4LETTER + SEPARATOR + partida.getInfo() + START_GAME;
-                state = ASKED4LETTER_ONLINE;
-                break;
-            case ASKED4LETTER_ONLINE:
-                System.out.println("State: ASKED4LETTER_ONLINE");
-                switch(command[0]) {
-                    case SEND_LETTER:
-                        state = partida.checkLetterOnline(command[1]);
-                        // TODO: if(pierde) esperar; if(gana) parar a todo el mundo
-                        if(state.equals(ANOTHER)) {
-                            output = ASK4ANOTHER;
-                            try {
-                                updateDatabase();
-                            } catch (SQLException e) {
-                                state = OPTIONS;
-                                return SHOW_GAME_MENU + SEPARATOR + UNEXPECTED_ERROR;
-                            }
-                        }
-                        else output = ASK4LETTER;
-                        output += SEPARATOR + partida.getInfo();
-                        break;
-                    case CLIENT_ERROR:
-                        output = ASK4LETTER + SEPARATOR + partida.getInfoNoMessage() + SEPARATOR + INVALID_MENU_OPTION;
-                }
-                break;
             case WAITING_GAME_MENU: 
                 System.out.println("State: WAITING_GAME_MENU");
                 output = SHOW_GAME_MENU;
@@ -408,10 +380,6 @@ public class ServerProtocol {
         psGameTime.setString(2,name_login);
         psGameTime.execute();
         psGameTime.close();
-    }
-    
-    public void setPartida(Partida p) {
-        partida = p;
     }
     
     public void setState(String state) {

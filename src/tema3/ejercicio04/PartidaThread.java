@@ -19,15 +19,15 @@ public class PartidaThread extends Thread {
     private final int MAX_PLAYERS = 3;
     private int playerCount;
     private ArrayList<Socket> players;
-    private Partida partida;
+    private PartidaOnline partida;
     private AhorcadoServer s;
-    private Clientes hilosCliente;
+    private Clientes clientes;
 
     public PartidaThread(AhorcadoServer s) {
         playerCount = 0;
         players = new ArrayList();
-        partida = new Partida();
-        hilosCliente = new Clientes();
+        partida = new PartidaOnline();
+        clientes = new Clientes();
         this.s = s;
     }
 
@@ -52,12 +52,12 @@ public class PartidaThread extends Thread {
         
         for(Socket player : players) {
                 OnlineClientThread oct = new OnlineClientThread(player, this);
-                hilosCliente.add(oct);
+                clientes.add(oct);
                 oct.start();
         }
         
         try {
-            while(hilosCliente.someIsPlaying()) Thread.sleep(100);
+            while(clientes.someIsPlaying()) Thread.sleep(100);
         } catch (InterruptedException e) {}
     }
     
@@ -73,8 +73,12 @@ public class PartidaThread extends Thread {
         notifyAll();
     }
     
-    public synchronized Partida getPartida() {
+    public synchronized PartidaOnline getPartida() {
         return partida;
+    }
+    
+    public synchronized void someoneWon(OnlineClientThread oct) {
+        
     }
     
     public class Clientes {
@@ -94,6 +98,15 @@ public class PartidaThread extends Thread {
                 someIsPlaying = someIsPlaying || oct.isAlive();
             }
             return someIsPlaying;
+        }
+        
+        public void someoneWon(OnlineClientThread t) {
+            for(OnlineClientThread oct : hilosCliente) {
+                if(!oct.equals(t)) {
+                    oct.interrupt();
+                }
+            }
+            
         }
         
     }

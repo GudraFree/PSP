@@ -18,6 +18,8 @@ public class Partida {
     public String word;
     public String solvedWord;
     public String mensaje;
+    
+    private OnlineClientThread hiloPlayer;
 
     public Partida() {
         errors = 0;
@@ -26,6 +28,9 @@ public class Partida {
         mensaje = "";
         for(int i=0;i<word.length();i++) solvedWord+="*";
     }
+     public Partida(OnlineClientThread t) {
+         hiloPlayer = t;
+     }
     
     public synchronized String getInfo() {
         System.out.println("Word: "+word);
@@ -69,40 +74,5 @@ public class Partida {
         return state;
     }
     
-    public synchronized String checkLetterOnline(String lett) {
-        String letra = lett.toUpperCase();
-        String state = "";
-        if(word.indexOf(letra)<0) { //letra no encontrada
-            errors++;
-            if(errors==MAX_ERRORS) {
-                mensaje = LOSE_ONLINE;
-                state = WAIT_END_GAME_ONLINE;
-            } else {
-                mensaje = WRONG_LETTER;
-                state = ASKED4LETTER_ONLINE;
-            }
-        } else { //letra encontrada
-            if(solvedWord.contains(lett)) {
-                mensaje = LETTER_TAKEN;
-                state = ASKED4LETTER_ONLINE;
-            } else {
-                String newSolvedWord = "";
-                for(int i=0; i<word.length(); i++) {
-                    String l = String.valueOf(word.charAt(i));
-                    String c = String.valueOf(solvedWord.charAt(i));
-                    if(l.equals(letra)) newSolvedWord+=l;
-                    else newSolvedWord+=c;
-                }
-                solvedWord = newSolvedWord;
-                if(word.equals(solvedWord)) {
-                    mensaje = VICTORY_ONLINE;
-    //                state = ANOTHER;
-                } else {
-                    mensaje = RIGHT_LETTER;
-                    state = ASKED4LETTER_ONLINE;
-                }
-            }
-        }
-        return state;
-    }
+    
 }
