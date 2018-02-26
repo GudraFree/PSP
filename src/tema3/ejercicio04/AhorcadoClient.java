@@ -44,8 +44,10 @@ public class AhorcadoClient {
         while((l=in.readLine())!=null) {
             cp.processInput(l);
             String input = "";
-            if(cp.shouldWrite()) {
+            if(cp.shouldAsk4input()) {
                 input = sc.nextLine();
+            }
+            if(cp.shouldSendInput()) {
                 out.println(cp.processOutput(input));
             }
         }

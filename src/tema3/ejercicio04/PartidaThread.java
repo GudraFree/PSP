@@ -59,6 +59,8 @@ public class PartidaThread extends Thread {
         try {
             while(clientes.someIsPlaying()) Thread.sleep(100);
         } catch (InterruptedException e) {}
+        
+        System.out.println("Terminado el hilo PartidaThread");
     }
     
     
@@ -78,7 +80,7 @@ public class PartidaThread extends Thread {
     }
     
     public synchronized void someoneWon(OnlineClientThread oct) {
-        
+        clientes.someoneWon(oct);
     }
     
     public class Clientes {

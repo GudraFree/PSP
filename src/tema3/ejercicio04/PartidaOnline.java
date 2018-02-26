@@ -26,6 +26,7 @@ public class PartidaOnline {
     public String word;
     public String solvedWord;
     public String mensaje;
+    public boolean alreadyWon = false;
     
     public PartidaOnline() {
         word = WORDS[(int)(Math.random()*WORDS.length)];
@@ -60,8 +61,14 @@ public class PartidaOnline {
                 }
                 solvedWord = newSolvedWord;
                 if(word.equals(solvedWord)) {
-                    mensaje = VICTORY_ONLINE;
-                    state = WON_ONLINE;
+                    if(!alreadyWon) {
+                        mensaje = VICTORY_ONLINE;
+                        state = WON_ONLINE;
+                        alreadyWon = true;
+                    } else {
+                        mensaje = LOSE_ONLINE;
+                        state = LOST_ONLINE;
+                    }
                 } else {
                     mensaje = RIGHT_LETTER;
                     state = ASKED4LETTER_ONLINE;

@@ -46,13 +46,13 @@ public class AhorcadoServerThread extends Thread {
                 if(output.equals(Utils.START_ONLINE_GAME)) {
                     System.out.println("Empezado juego online");
                     s.searchGame(socket);
+                    pt = s.partidaPendiente;
                     try {
-                        s.partidaPendiente.join();
+                        pt.join();
                     } catch (InterruptedException e) {
-                    } finally {
-                        ap.setState(Utils.WAITING_GAME_MENU);
-                        output = ap.processInput("");
                     }
+                    ap.setState(Utils.WAITING_GAME_MENU);
+                    output = ap.processInput("");
                 }
                 out.println(output);
                 if(output.equals(Utils.END_CLIENT_LIFE)) {

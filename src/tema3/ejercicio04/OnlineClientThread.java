@@ -45,12 +45,18 @@ public class OnlineClientThread extends Thread {
             while((input=in.readLine())!= null) {
                 output = p.processInput(input);
                 if(Thread.currentThread().isInterrupted()) {
+                    out.println(Utils.I_LOST_ONLINE);
                     break;
                 }
                 out.println(output);
-                // TODO: terminar este bucle 
+                if(output.equals(Utils.END_ONLINE_GAME)) {
+                    // TODO: aquí debería volver al hilo AhorcadoServerThread que atiende al cliente, ponerle su estado, etc
+                    System.out.println("Rompiendo el bucle del hilo "+Thread.currentThread());
+                    break;
+                }
             }
-
+            
+            System.out.println("Terminando el hilo "+Thread.currentThread());
             in.close();
             out.close();
         } catch (IOException e) {

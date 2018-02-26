@@ -66,6 +66,7 @@ public class Utils {
     public static final String ASK4LETTER_ONLINE = "123";
     public static final String I_LOST_ONLINE = "124";
     public static final String I_WON_ONLINE = "125";
+    public static final String END_ONLINE_GAME = "126";
     
     // mensajes del servidor
     public static final String VALID_LOGIN = "210";

@@ -56,6 +56,7 @@ public class OnlineGameProtocol {
                 }
                 break;
             case LOST_ONLINE:
+                output = END_ONLINE_GAME;
                 // TODO: si pierde, debería esperar
                 break;
             case WON_ONLINE:
@@ -63,6 +64,7 @@ public class OnlineGameProtocol {
                 // - interrumpir a los que sigan jugando
                 // - notificar a los que hayan terminado (¿puede catchear una interrupción?)
                 oct.pt.someoneWon(oct);
+                output = END_ONLINE_GAME;
                 break;
             case WAITING_GAME_MENU: 
                 System.out.println("Thread: "+Thread.currentThread()+"; State: WAITING_GAME_MENU");

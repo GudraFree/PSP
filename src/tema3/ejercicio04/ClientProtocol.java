@@ -12,6 +12,7 @@ import static tema3.ejercicio04.Utils.*;
 public class ClientProtocol {
     private String state;
     private boolean shouldAsk4Input = true;
+    private boolean shouldSendInput = true;
     private boolean isAdmin = false;
 
     public ClientProtocol() {
@@ -51,6 +52,7 @@ public class ClientProtocol {
                 break;
             case L_ASK4NAME:
                 shouldAsk4Input = true;
+                shouldSendInput = true;
                 if(command.length>1) { // se ha añadido un argumento extra, un mensaje de error
                     switch(command[1]) {
                         case L_PASS_NOT_VALID:
@@ -68,26 +70,31 @@ public class ClientProtocol {
                 break;
             case L_ASK4PASS:
                 shouldAsk4Input = true;
+                shouldSendInput = true;
                 System.out.println("Introduzca contraseña:");
                 state = L_PASS;
                 break;
             case R_ASK4NAME:
                 shouldAsk4Input = true;
+                shouldSendInput = true;
                 System.out.println("Introduzca nombre:");
                 state = R_NAME;
                 break;
             case R_ASK4PASS:
                 shouldAsk4Input = true;
+                shouldSendInput = true;
                 System.out.println("Introduzca contraseña:");
                 state = R_PASS;
                 break;
             case R_ASK4ADMIN:
                 shouldAsk4Input = true;
+                shouldSendInput = true;
                 System.out.println("¿Es admin? (s/n):");
                 state = R_ADMIN;
                 break;
             case SHOW_GAME_MENU:
                 shouldAsk4Input = true;
+                shouldSendInput = true;
                 if(command.length>1) {
                     switch(command[1]) {
                         case VALID_LOGIN:
@@ -127,6 +134,7 @@ public class ClientProtocol {
                 break;
             case ASK4USER:
                 shouldAsk4Input = true;
+                shouldSendInput = true;
                 if(command.length>1) {
                     switch(command[1]) {
                         case USER_NOT_EXIST:
@@ -144,6 +152,7 @@ public class ClientProtocol {
                 break;
             case ASK4LETTER:
                 shouldAsk4Input = true;
+                shouldSendInput = true;
                 if (command.length==4) { // op:solvedWord:errors:mensaje
                     System.out.println(AHORCADO[Integer.parseInt(command[2])]); //imprime ahorcado
                     System.out.println(command[1]); // imprime la palabra mostrada (con asteriscos y letras)
@@ -167,6 +176,7 @@ public class ClientProtocol {
                 break;
             case ASK4ANOTHER:
                 shouldAsk4Input = true;
+                shouldSendInput = true;
                 if (command.length==4) { // op:solvedWord:errors:mensaje
                     System.out.println(AHORCADO[Integer.parseInt(command[2])]); //imprime ahorcado
                     System.out.println(command[1]); // imprime la palabra mostrada (con asteriscos y letras)
@@ -200,9 +210,11 @@ public class ClientProtocol {
             case WAITING_FOR_PLAYERS:
                 System.out.println("Esperando a "+command[1]+" jugadores");
                 shouldAsk4Input = false;
+                shouldSendInput = false;
                 break;
             case ASK4LETTER_ONLINE:
                 shouldAsk4Input = true;
+                shouldSendInput = true;
                 if (command.length==4) { // op:solvedWord:mensaje:error
                     System.out.println(AHORCADO[Integer.parseInt(command[3])]); //imprime ahorcado
                     System.out.println(command[1]); // imprime la palabra mostrada (con asteriscos y letras)
@@ -228,10 +240,14 @@ public class ClientProtocol {
                 break;
             case I_LOST_ONLINE:
                 shouldAsk4Input = false;
+                shouldSendInput = true;
+                state = LOST_ONLINE;
                 System.out.println("He perdido...");
                 break;
             case I_WON_ONLINE:
                 shouldAsk4Input = false;
+                shouldSendInput = true;
+                state = WON_ONLINE;
                 System.out.println("¡He ganado!");
                 break;
         }
@@ -309,12 +325,21 @@ public class ClientProtocol {
                     output = SEND_LETTER + SEPARATOR + input;
                 } else output = CLIENT_ERROR;
                 break;
-            
+            case WON_ONLINE:
+                output = ("");
+                break;
+            case LOST_ONLINE:
+                output = ("");
+                break;
         }
         return output;
     }
     
-    public boolean shouldWrite() {
+    public boolean shouldAsk4input() {
         return shouldAsk4Input;
+    }
+    
+    public boolean shouldSendInput() {
+        return shouldSendInput;
     }
 }
