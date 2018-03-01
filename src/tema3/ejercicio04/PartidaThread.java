@@ -18,7 +18,7 @@ import static tema3.ejercicio04.Utils.*;
 public class PartidaThread extends Thread {
     private final int MAX_PLAYERS = 3;
     private int playerCount;
-    private ArrayList<Socket> players;
+    private ArrayList<AhorcadoServerThread> players;
     private PartidaOnline partida;
     private AhorcadoServer s;
     private Clientes clientes;
@@ -35,10 +35,10 @@ public class PartidaThread extends Thread {
     public void run() {
         while(!isFull()) {
             try {
-                for(Socket player : players) {
+                for(AhorcadoServerThread player : players) {
                     String output = WAITING_FOR_PLAYERS+SEPARATOR+(MAX_PLAYERS-playerCount);
                     System.out.println(output);
-                    new PrintWriter(player.getOutputStream(), true).println(output);
+                    new PrintWriter(player.socket.getOutputStream(), true).println(output);
                     System.out.println("Enviado output desde hilo Partida. Procediendo a esperar");
                 }
                 synchronized(this) {
@@ -50,7 +50,7 @@ public class PartidaThread extends Thread {
         }
         s.chechIfFull(); // para settear la partida pendiente del server de esta instancia a null
         
-        for(Socket player : players) {
+        for(AhorcadoServerThread player : players) {
                 OnlineClientThread oct = new OnlineClientThread(player, this);
                 clientes.add(oct);
                 oct.start();
@@ -69,7 +69,7 @@ public class PartidaThread extends Thread {
         return playerCount == MAX_PLAYERS;
     }
     
-    public synchronized void addPlayer(Socket t) {
+    public synchronized void addPlayer(AhorcadoServerThread t) {
         players.add(t);
         playerCount = players.size();
         notifyAll();

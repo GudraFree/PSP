@@ -37,7 +37,7 @@ public class AhorcadoServer {
         serverSocket.close();
     }
     
-    public synchronized void searchGame(Socket player) {
+    public synchronized void searchGame(AhorcadoServerThread player) {
         if(partidaPendiente==null) {
             partidaPendiente = new PartidaThread(this);
             System.out.println("Creado PartidaThread");

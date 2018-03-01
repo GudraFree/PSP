@@ -17,13 +17,15 @@ import java.net.Socket;
  */
 public class OnlineClientThread extends Thread {
     Socket player;
+    AhorcadoServerThread offlinePlayerThread;
     PartidaThread pt;
     PrintWriter out;
     BufferedReader in;
     int errors;
 
-    public OnlineClientThread(Socket player, PartidaThread pt) {
-        this.player = player;
+    public OnlineClientThread(AhorcadoServerThread offlinePlayerThread, PartidaThread pt) {
+        this.offlinePlayerThread = offlinePlayerThread;
+        this.player = offlinePlayerThread.socket;
         this.pt = pt;
         errors = 0;
     }
@@ -51,6 +53,7 @@ public class OnlineClientThread extends Thread {
                 out.println(output);
                 if(output.equals(Utils.END_ONLINE_GAME)) {
                     // TODO: aquí debería volver al hilo AhorcadoServerThread que atiende al cliente, ponerle su estado, etc
+                    offlinePlayerThread.setState(Utils.WAITING_GAME_MENU);
                     System.out.println("Rompiendo el bucle del hilo "+Thread.currentThread());
                     break;
                 }

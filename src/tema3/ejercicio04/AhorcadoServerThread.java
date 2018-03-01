@@ -21,6 +21,7 @@ public class AhorcadoServerThread extends Thread {
     BufferedReader in;
     AhorcadoServer s;
     PartidaThread pt;
+    ServerProtocol ap;
 
     public AhorcadoServerThread(Socket socket, AhorcadoServer s) {
         this.socket = socket;
@@ -33,7 +34,7 @@ public class AhorcadoServerThread extends Thread {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            ServerProtocol ap = new ServerProtocol(Utils.WAITING_LOGIN);
+            ap = new ServerProtocol(Utils.WAITING_LOGIN);
 
             String output = ap.processInput("");
     //        System.out.println("Server: "+output);
@@ -45,7 +46,7 @@ public class AhorcadoServerThread extends Thread {
     //            System.out.println(output);
                 if(output.equals(Utils.START_ONLINE_GAME)) {
                     System.out.println("Empezado juego online");
-                    s.searchGame(socket);
+                    s.searchGame(this);
                     pt = s.partidaPendiente;
                     try {
                         pt.join();
@@ -70,5 +71,8 @@ public class AhorcadoServerThread extends Thread {
         }
     }
     
-    
+    public void setState(String state) {
+        ap.setState(state);
+        out.println(ap.processInput(""));
+    }
 }
