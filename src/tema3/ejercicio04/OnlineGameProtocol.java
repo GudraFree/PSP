@@ -27,6 +27,7 @@ public class OnlineGameProtocol {
     public String processInput(String input) { // input del palo opClient-[arg-arg2]
         String[] command = input.split(SEPARATOR);
         String output = ""; // output del palo opServer-[datos-datos]
+        System.out.println("");
         System.out.println("Input: "+input);
         
         switch(state) {
@@ -56,10 +57,12 @@ public class OnlineGameProtocol {
                 }
                 break;
             case LOST_ONLINE:
+                System.out.println("Thread: "+Thread.currentThread()+"; State: LOST_ONLINE");
                 output = END_ONLINE_GAME;
                 // TODO: si pierde, debería esperar
                 break;
             case WON_ONLINE:
+                System.out.println("Thread: "+Thread.currentThread()+"; State: WON_ONLINE");
                 // TODO: si gana, debe:
                 // - interrumpir a los que sigan jugando
                 // - notificar a los que hayan terminado (¿puede catchear una interrupción?)

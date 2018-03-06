@@ -20,7 +20,7 @@ public class PartidaThread extends Thread {
     private int playerCount;
     private ArrayList<AhorcadoServerThread> players;
     private PartidaOnline partida;
-    private AhorcadoServer s;
+    public AhorcadoServer s;
     private Clientes clientes;
 
     public PartidaThread(AhorcadoServer s) {
@@ -60,6 +60,9 @@ public class PartidaThread extends Thread {
             while(clientes.someIsPlaying()) Thread.sleep(100);
         } catch (InterruptedException e) {}
         
+        synchronized(s) {
+            notifyAll();
+        }
         System.out.println("Terminado el hilo PartidaThread");
     }
     

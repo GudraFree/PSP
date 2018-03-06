@@ -63,6 +63,7 @@ public class ServerProtocol {
     public String processInput(String input) { // input del palo opClient-[arg-arg2]
         String[] command = input.split(SEPARATOR);
         String output = ""; // output del palo opServer-[datos-datos]
+        System.out.println("");
         System.out.println("Input: "+input);
         
         switch(state) {
@@ -277,6 +278,7 @@ public class ServerProtocol {
                         break;
                     case PLAY_ONLINE:
                         output = START_ONLINE_GAME;
+                        state = WAITING_GAME_MENU;
                         break;
                     default:
                         output = SHOW_GAME_MENU+SEPARATOR+UNEXPECTED_ERROR;

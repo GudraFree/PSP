@@ -46,22 +46,26 @@ public class OnlineClientThread extends Thread {
 
             while((input=in.readLine())!= null) {
                 output = p.processInput(input);
-                if(Thread.currentThread().isInterrupted()) {
-                    out.println(Utils.I_LOST_ONLINE);
+//                if(Thread.currentThread().isInterrupted()) {
+//                    out.println(Utils.I_LOST_ONLINE);
+//                    break;
+//                }
+                if(output.equals(Utils.END_ONLINE_GAME)) {
+                    // TODO: aquí debería volver al hilo AhorcadoServerThread que atiende al cliente, ponerle su estado, etc
+//                    offlinePlayerThread.setState(Utils.WAITING_GAME_MENU);
+                    System.out.println("Rompiendo el bucle del hilo "+Thread.currentThread());
+                    synchronized(pt.s) {
+                        try {
+                            wait();
+                        } catch (Exception e) {}
+                    }
+                    out.println(output);
                     break;
                 }
                 out.println(output);
-                if(output.equals(Utils.END_ONLINE_GAME)) {
-                    // TODO: aquí debería volver al hilo AhorcadoServerThread que atiende al cliente, ponerle su estado, etc
-                    offlinePlayerThread.setState(Utils.WAITING_GAME_MENU);
-                    System.out.println("Rompiendo el bucle del hilo "+Thread.currentThread());
-                    break;
-                }
             }
             
             System.out.println("Terminando el hilo "+Thread.currentThread());
-            in.close();
-            out.close();
         } catch (IOException e) {
             System.err.println("Error de E/S en "+Thread.currentThread());
         }

@@ -52,10 +52,12 @@ public class AhorcadoServerThread extends Thread {
                         pt.join();
                     } catch (InterruptedException e) {
                     }
-                    ap.setState(Utils.WAITING_GAME_MENU);
-                    output = ap.processInput("");
+                    
+//                    ap.setState(Utils.WAITING_GAME_MENU);
+//                    output = ap.processInput("");
+                } else {
+                    out.println(output);
                 }
-                out.println(output);
                 if(output.equals(Utils.END_CLIENT_LIFE)) {
                     System.out.println("Terminando conexión con cliente de manera natural");
                     break;
@@ -71,8 +73,8 @@ public class AhorcadoServerThread extends Thread {
         }
     }
     
-    public void setState(String state) {
-        ap.setState(state);
-        out.println(ap.processInput(""));
-    }
+//    public void setState(String state) {
+//        ap.setState(state);
+//        out.println(ap.processInput(""));
+//    }
 }
