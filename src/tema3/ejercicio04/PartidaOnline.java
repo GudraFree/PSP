@@ -39,6 +39,11 @@ public class PartidaOnline {
         String letra = lett.toUpperCase();
         String state = "";
         if(word.indexOf(letra)<0) { //letra no encontrada
+            if(alreadyWon) {
+                mensaje = LOSE_ONLINE;
+                state = LOST_ONLINE;
+                return state;
+            }
             caller.setErrors(caller.getErrors() + 1);
             if(caller.getErrors()==MAX_ERRORS) {
                 mensaje = LOSE_ONLINE;

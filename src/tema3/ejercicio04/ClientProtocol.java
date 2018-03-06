@@ -251,45 +251,49 @@ public class ClientProtocol {
                 System.out.println("¡He ganado!");
                 break;
             case END_ONLINE_GAME:
-                shouldAsk4Input = true;
+                shouldAsk4Input = false;
                 shouldSendInput = true;
                 System.out.println("Terminada partida online");
-                if(command.length>1) {
-                    switch(command[1]) {
-                        case VALID_LOGIN:
-                            System.out.println("Logueo realizado con éxito");
-                            isAdmin = command[2].equals("admin");
-                            break;
-                        case UNEXPECTED_ERROR:
-                            System.out.println(M_UNEXPECTED_ERROR);
-                            break;
-                        case SHOW_OWN_QUERY: // SHOW_GAME_MENU:SHOW_OWN_QUERY:jugadas:ganadas:tiempo
-                            System.out.println("Tus estadísticas de juego son:");
-                            System.out.println("\tPartidas jugadas: "+command[2]);
-                            System.out.println("\tPartidas ganadas: "+command[3]);
-                            System.out.println("\tTiempo de juego: "+command[4]);
-                            System.out.println("");
-                            break;
-                        case SHOW_USER_QUERY: // SHOW_GAME_MENU:SHOW_OWN_QUERY:jugadas:ganadas:tiempo:user
-                            System.out.println("Las estadísticas de juego de "+command[5]+" son:");
-                            System.out.println("\tPartidas jugadas: "+command[2]);
-                            System.out.println("\tPartidas ganadas: "+command[3]);
-                            System.out.println("\tTiempo de juego: "+command[4]);
-                            System.out.println("");
-                            break;
-                    }
-                }
-                System.out.println("Elija una opción");
-                System.out.println("\t1. Jugar");
-                System.out.println("\t2. Jugar online");
-                System.out.println("\t3. Consultar tus estadísticas");
-                if(isAdmin) {
-                    System.out.println("\t4. Consultar estadísticas de cualquier usuario");
-                    System.out.println("\t5. Salir");
-                } else {
-                    System.out.println("\t4. Salir");
-                }
-                state = OPTIONS;
+                state = "default";
+//                shouldAsk4Input = true;
+//                shouldSendInput = true;
+//                System.out.println("Terminada partida online");
+//                if(command.length>1) {
+//                    switch(command[1]) {
+//                        case VALID_LOGIN:
+//                            System.out.println("Logueo realizado con éxito");
+//                            isAdmin = command[2].equals("admin");
+//                            break;
+//                        case UNEXPECTED_ERROR:
+//                            System.out.println(M_UNEXPECTED_ERROR);
+//                            break;
+//                        case SHOW_OWN_QUERY: // SHOW_GAME_MENU:SHOW_OWN_QUERY:jugadas:ganadas:tiempo
+//                            System.out.println("Tus estadísticas de juego son:");
+//                            System.out.println("\tPartidas jugadas: "+command[2]);
+//                            System.out.println("\tPartidas ganadas: "+command[3]);
+//                            System.out.println("\tTiempo de juego: "+command[4]);
+//                            System.out.println("");
+//                            break;
+//                        case SHOW_USER_QUERY: // SHOW_GAME_MENU:SHOW_OWN_QUERY:jugadas:ganadas:tiempo:user
+//                            System.out.println("Las estadísticas de juego de "+command[5]+" son:");
+//                            System.out.println("\tPartidas jugadas: "+command[2]);
+//                            System.out.println("\tPartidas ganadas: "+command[3]);
+//                            System.out.println("\tTiempo de juego: "+command[4]);
+//                            System.out.println("");
+//                            break;
+//                    }
+//                }
+//                System.out.println("Elija una opción");
+//                System.out.println("\t1. Jugar");
+//                System.out.println("\t2. Jugar online");
+//                System.out.println("\t3. Consultar tus estadísticas");
+//                if(isAdmin) {
+//                    System.out.println("\t4. Consultar estadísticas de cualquier usuario");
+//                    System.out.println("\t5. Salir");
+//                } else {
+//                    System.out.println("\t4. Salir");
+//                }
+//                state = OPTIONS;
                 break;
         }
     }
@@ -371,6 +375,9 @@ public class ClientProtocol {
                 break;
             case LOST_ONLINE:
                 output = ("HE PERDIDOOOOGLMASKASD");
+                break;
+            case "default":
+                output = "";
                 break;
         }
         return output;

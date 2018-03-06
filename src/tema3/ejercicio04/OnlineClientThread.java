@@ -54,11 +54,11 @@ public class OnlineClientThread extends Thread {
                     // TODO: aquí debería volver al hilo AhorcadoServerThread que atiende al cliente, ponerle su estado, etc
 //                    offlinePlayerThread.setState(Utils.WAITING_GAME_MENU);
                     System.out.println("Rompiendo el bucle del hilo "+Thread.currentThread());
-                    synchronized(pt.s) {
-                        try {
-                            wait();
-                        } catch (Exception e) {}
-                    }
+//                    synchronized(pt.s) {
+//                        try {
+//                            wait();
+//                        } catch (Exception e) {}
+//                    }
                     out.println(output);
                     break;
                 }

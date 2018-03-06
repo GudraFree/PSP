@@ -59,10 +59,10 @@ public class PartidaThread extends Thread {
         try {
             while(clientes.someIsPlaying()) Thread.sleep(100);
         } catch (InterruptedException e) {}
-        
-        synchronized(s) {
-            notifyAll();
-        }
+//        
+//        synchronized(s) {
+//            notifyAll();
+//        }
         System.out.println("Terminado el hilo PartidaThread");
     }
     
