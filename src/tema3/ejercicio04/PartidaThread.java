@@ -48,7 +48,7 @@ public class PartidaThread extends Thread {
             } catch (InterruptedException e) {
             }
         }
-        s.chechIfFull(); // para settear la partida pendiente del server de esta instancia a null
+        s.resetPendiente(); // para settear la partida pendiente del server de esta instancia a null
         
         for(AhorcadoServerThread player : players) {
                 OnlineClientThread oct = new OnlineClientThread(player, this);
@@ -59,10 +59,6 @@ public class PartidaThread extends Thread {
         try {
             while(clientes.someIsPlaying()) Thread.sleep(100);
         } catch (InterruptedException e) {}
-//        
-//        synchronized(s) {
-//            notifyAll();
-//        }
         System.out.println("Terminado el hilo PartidaThread");
     }
     

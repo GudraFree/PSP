@@ -38,20 +38,20 @@ public class AhorcadoServer {
     }
     
     public synchronized void searchGame(AhorcadoServerThread player) {
-        if(partidaPendiente==null) {
+        if(partidaPendiente==null) { // si no existe una partida pendiente, la creamos, añadimos el jugador y lanzamos el hilo
             partidaPendiente = new PartidaThread(this);
             System.out.println("Creado PartidaThread");
             partidaPendiente.addPlayer(player);
             System.out.println("Añadido jugador");
             partidaPendiente.start();
             System.out.println("Lanzado hilo partida");
-        } else {
+        } else { // si ya hay una partida pendiente, añadimos el jugador
             partidaPendiente.addPlayer(player);
             System.out.println("Añadido jugador");
         }
     }
     
-    public synchronized void chechIfFull() {
+    public synchronized void resetPendiente() { // será llamado cuando la partida esté llena así que siempre la resetea a pesar del if
         if(partidaPendiente.isFull()) partidaPendiente = null;
     }
 }

@@ -37,24 +37,20 @@ public class AhorcadoServerThread extends Thread {
             ap = new ServerProtocol(Utils.WAITING_LOGIN);
 
             String output = ap.processInput("");
-    //        System.out.println("Server: "+output);
             String input;
             out.println(output);
 
             while((input=in.readLine())!= null) {
                 output = ap.processInput(input);
-    //            System.out.println(output);
-                if(output.equals(Utils.START_ONLINE_GAME)) {
+                if(output.equals(Utils.START_ONLINE_GAME)) { //hemos introducido la opción de jugar online
                     System.out.println("Empezado juego online");
-                    s.searchGame(this);
-                    pt = s.partidaPendiente;
+                    s.searchGame(this); //buscamos partida y nos pasamos como jugador
+                    pt = s.partidaPendiente; // almacenamos el hilo partida
                     try {
-                        pt.join();
+                        pt.join(); //esperamos a que termine la partida. Nuestro hilo espera aquí pacientemente en el estado WAITING_GAME_MENU, preparado para mostrar el menú cuando se vuelva
                     } catch (InterruptedException e) {
                     }
                     
-//                    ap.setState(Utils.WAITING_GAME_MENU);
-//                    output = ap.processInput("");
                 } else {
                     out.println(output);
                 }
@@ -72,9 +68,4 @@ public class AhorcadoServerThread extends Thread {
             System.err.println("Error de E/S en "+Thread.currentThread());
         }
     }
-    
-//    public void setState(String state) {
-//        ap.setState(state);
-//        out.println(ap.processInput(""));
-//    }
 }

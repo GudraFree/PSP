@@ -44,10 +44,10 @@ public class AhorcadoClient {
         while((l=in.readLine())!=null) {
             cp.processInput(l);
             String input = "";
-            if(cp.shouldAsk4input()) {
+            if(cp.shouldAsk4input()) { // comprueba si tiene que recibir input por teclado
                 input = sc.nextLine();
             }
-            if(cp.shouldSendInput()) {
+            if(cp.shouldSendInput()) { // comprueba si tiene que enviar una respuesta al servidor
                 out.println(cp.processOutput(input));
             }
         }
